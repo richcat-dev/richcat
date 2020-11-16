@@ -8,6 +8,10 @@ with open("README.md", "r") as fh:
 package_name = 'richcat'
 main_directory = 'richcat'
 root_dir = path.abspath(path.dirname(__file__))
+
+def _requirements():
+    return [name.rstrip() for name in open(path.join(root_dir, 'requirements.txt')).readlines()]
+
 with open(path.join(root_dir, main_directory, '__init__.py')) as f:
     init_text = f.read()
     version = re.search(r'__version__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
@@ -33,6 +37,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url=url,
     packages=setuptools.find_packages(),
+    install_requires=_requirements(),
     classifiers=[
         "Programming Language :: Python",
         'Programming Language :: Python :: 3',
