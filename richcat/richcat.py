@@ -70,23 +70,16 @@ def make_rich(filepath, filetype):
     text : *
         rich text
     """
-
-    syntax_dict = {
-        'py': 'python',
-        'rust': 'rust',
-        'js': 'javascript',
-        'tex': 'tex'
-    }
-    if filetype in syntax_dict.keys():
-        maker = SyntaxMaker(filepath, syntax_dict[filetype])
-        return maker.make()
-
     if filetype == 'md':
-        maker = MarkdownMaker(filepath, None)
+        maker = MarkdownMaker(filepath)
         return maker.make()
 
-    if filetype == 'csv':
-        maker = TableMaker(filepath, None)
+    elif filetype == 'csv':
+        maker = TableMaker(filepath)
+        return maker.make()
+
+    else:
+        maker = SyntaxMaker(filepath)
         return maker.make()
 
 
