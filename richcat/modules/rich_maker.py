@@ -9,7 +9,7 @@ from rich.table import Table
 class iRichMaker(ABC):
     """ Rich maker interface """
     
-    def __init__(self, filepath, filetype):
+    def __init__(self, filepath):
         """
         Constructor
         
@@ -17,11 +17,8 @@ class iRichMaker(ABC):
         ----------
         filepath : str
             filepath
-        filetype : str
-            filetype
         """
         self.filepath = filepath
-        self.filetype = filetype
 
     def make(self):
         """ executor of rich making """
@@ -42,12 +39,10 @@ class SyntaxMaker(iRichMaker):
     """ Syntax maker """
 
     def _read(self):
-        with open(self.filepath) as f:
-            file_contents = f.read()
-        return file_contents
+        return None
 
     def _write(self, file_contents):
-        return Syntax(file_contents, self.filetype, line_numbers=True)
+        return Syntax.from_path(self.filepath, line_numbers=True)
 
 
 class MarkdownMaker(iRichMaker):
