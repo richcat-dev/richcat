@@ -3,9 +3,8 @@ import os
 import argparse
 
 from rich.console import Console
-from rich.markdown import Markdown
-from rich.syntax import Syntax
-from rich.table import Table
+
+from .modules.rich_maker import SyntaxMaker, MarkdownMaker, TableMaker
 
 
 def decide_text_width(arg_width):
@@ -79,31 +78,16 @@ def make_rich(filepath, filetype):
         'tex': 'tex'
     }
     if filetype in syntax_dict.keys():
-        with open(filepath) as f:
-            text = f.read()
-        return Syntax(text, syntax_dict[filetype], line_numbers=True)
+        maker = SyntaxMaker(filepath, syntax_dict[filetype])
+        return maker.make()
 
     if filetype == 'md':
-        with open(filepath) as f:
-            text = f.read()
-        return Markdown(text)
+        maker = MarkdownMaker(filepath, None)
+        return maker.make()
 
     if filetype == 'csv':
-        # instance
-        text = Table(show_header=True, header_style="bold magenta")
-        # Read file
-        lst_table = []
-        with open(filepath) as f:
-            for l in f.read().splitlines():
-                lst_table.append(l.split(','))
-        # Generate rich text
-        columns = []
-        for col in range(len(lst_table[0])):
-            text.add_column(str(col))
-            columns += [col]
-        for row in lst_table:
-            text.add_row(*row)
-        return text
+        maker = TableMaker(filepath, None)
+        return maker.make()
 
 
 def main():
