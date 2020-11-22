@@ -3,5 +3,5 @@
 rich cat command working on Python
 
 # Contributors!
-- [@yamamoto-yuta](https://github.com/yamamoto-yuta) (**main contributor!**)
-- [@ShotaroKataoka](https://github.com/ShotaroKataoka)
+- [@yamamoto-yuta](https://github.com/yamamoto-yuta) (Maintainer, **main contributor!**)
+- [@ShotaroKataoka](https://github.com/ShotaroKataoka) (Maintainer)
