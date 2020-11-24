@@ -1,18 +1,20 @@
 from abc import ABC
 from abc import abstractmethod
 
-from rich.syntax import Syntax
 from rich.markdown import Markdown
 from rich.table import Table
+from rich.syntax import Syntax
+from rich.panel import Panel
+from rich.console import RenderGroup
 
 
-class iRichMaker(ABC):
-    """ Rich maker interface """
-    
+class AbstractRichMaker(ABC):
+    """ Abstract rich maker class """
+
     def __init__(self, filepath):
         """
         Constructor
-        
+
         Parameters
         ----------
         filepath : str
@@ -20,54 +22,83 @@ class iRichMaker(ABC):
         """
         self.filepath = filepath
 
-    def make(self):
-        """ executor of rich making """
-        return self._write(self._read())
+    def print(self, console, use_pager):
+        """
+        print rich text
+        
+        Parameters
+        ----------
+        console : rich.console.Console
+            console
+        use_pager : bool
+            The flag whether use pager
+        """
+        rich_text = self._make_rich_text(self._read_file())
+        if use_pager:
+            with console.pager(styles=True):
+                console.print(rich_text)
+        else:
+            console.print(rich_text)
+
 
     @abstractmethod
-    def _read(self):
-        """ file reader """
+    def _read_file(self):
+        """
+        file reader method
+        """
         pass
 
     @abstractmethod
-    def _write(self, file_contents):
-        """ rich maker """
+    def _make_rich_text(self, file_contents):
+        """
+        rich maker method
+        
+        Paremters
+        ---------
+        file_contents : str
+            file contents
+
+        Returns
+        -------
+        : str
+            rich text
+        """
         return file_contents
 
 
-class SyntaxMaker(iRichMaker):
+class SyntaxMaker(AbstractRichMaker):
     """ Syntax maker """
 
-    def _read(self):
+    def _read_file(self):
         return None
 
-    def _write(self, file_contents):
+    def _make_rich_text(self, file_contents):
         return Syntax.from_path(self.filepath, line_numbers=True)
 
 
-class MarkdownMaker(iRichMaker):
+class MarkdownMaker(AbstractRichMaker):
     """ Markdown maker """
 
-    def _read(self):
+    def _read_file(self):
         with open(self.filepath) as f:
             file_contents = f.read()
         return file_contents
 
-    def _write(self, file_contents):
+    def _make_rich_text(self, file_contents):
         return Markdown(file_contents)
 
 
-class TableMaker(iRichMaker):
+class TableMaker(AbstractRichMaker):
     """ Table maker """
 
-    def _read(self):
+    def _read_file(self):
         lst_table = []
         with open(self.filepath) as f:
             for l in f.read().splitlines():
                 lst_table.append(l.split(','))
         return lst_table
 
-    def _write(self, file_contents):
+    def _make_rich_text(self, file_contents):
         # Instance
         text = Table(show_header=True, header_style="bold magenta")
         # Add columns
