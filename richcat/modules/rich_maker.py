@@ -11,7 +11,7 @@ from rich.console import RenderGroup
 class AbstractRichMaker(ABC):
     """ Abstract rich maker class """
 
-    def __init__(self, filepath):
+    def __init__(self, filepath, filetype='auto'):
         """
         Constructor
 
@@ -19,8 +19,11 @@ class AbstractRichMaker(ABC):
         ----------
         filepath : str
             filepath
+        filetype : str
+            filetype (default: 'auto')
         """
         self.filepath = filepath
+        self.filetype = filetype
 
     def print(self, console, use_pager):
         """
@@ -70,10 +73,15 @@ class SyntaxMaker(AbstractRichMaker):
     """ Syntax maker """
 
     def _read_file(self):
-        return None
+        with open(self.filepath) as f:
+            file_contents = f.read()
+        return file_contents
 
     def _make_rich_text(self, file_contents):
-        return Syntax.from_path(self.filepath, line_numbers=True)
+        if self.filetype == 'auto':
+            return Syntax.from_path(self.filepath, line_numbers=True)
+        else:
+            return Syntax(file_contents, self.filetype, line_numbers=True)
 
 
 class MarkdownMaker(AbstractRichMaker):
