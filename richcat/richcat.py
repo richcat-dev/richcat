@@ -83,6 +83,7 @@ def print_rich(filepath, filetype, console, use_pager):
     else:
         maker = SyntaxMaker(filepath)
         maker.print(console, use_pager)
+            
 
 
 def main():
@@ -91,8 +92,8 @@ def main():
     parser.add_argument('filepath', type=str, metavar='FilePath', help='file path')
     parser.add_argument('-t', '--filetype', type=str, nargs='?', default='auto', metavar='FileType', help='filetype')
     parser.add_argument('-w', '--width', type=str, nargs='?', default='1.0', metavar='Width', help='width')
-    parser.add_argument('-c', '--color_system', type=str, nargs='?', default='256', choices=['standard', '256', 'truecolor', 'windows'], metavar='Width', help='width')
-    parser.add_argument('--disable_pager', action='store_true', help='flag of disable pager')
+    parser.add_argument('-c', '--color-system', type=str, nargs='?', default='256', choices=['standard', '256', 'truecolor', 'windows'], metavar='Width', help='width')
+    parser.add_argument('--disable-pager', action='store_true', help='flag of disable pager')
     args = parser.parse_args()
 
     """ Deciding TextWidth """
