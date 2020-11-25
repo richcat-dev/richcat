@@ -1,8 +1,11 @@
 from __future__ import unicode_literals
+import sys
 import os
 import argparse
 
 from rich.console import Console
+from rich.panel import Panel
+from rich.console import RenderGroup
 
 from .modules.rich_maker import SyntaxMaker, MarkdownMaker, TableMaker
 
@@ -54,7 +57,7 @@ def infer_filetype(filepath, filetype):
         return filepath, filetype
 
 
-def make_rich(filepath, filetype):
+def print_rich(filepath, filetype, console, use_pager):
     """
     The function which make rich text
 
@@ -64,23 +67,23 @@ def make_rich(filepath, filetype):
         filepath
     filetype : str
         filetype
-
-    Returns
-    -------
-    text : *
-        rich text
+    console : rich.console.Console
+        console
+    use_pager : bool
+            The flag whether use pager
     """
     if filetype == 'md':
         maker = MarkdownMaker(filepath)
-        return maker.make()
+        maker.print(console, use_pager)
 
     elif filetype == 'csv':
         maker = TableMaker(filepath)
-        return maker.make()
+        maker.print(console, use_pager)
 
     else:
         maker = SyntaxMaker(filepath)
-        return maker.make()
+        maker.print(console, use_pager)
+            
 
 
 def main():
@@ -89,7 +92,8 @@ def main():
     parser.add_argument('filepath', type=str, metavar='FilePath', help='file path')
     parser.add_argument('-t', '--filetype', type=str, nargs='?', default='auto', metavar='FileType', help='filetype')
     parser.add_argument('-w', '--width', type=str, nargs='?', default='1.0', metavar='Width', help='width')
-    parser.add_argument('-c', '--color_system', type=str, nargs='?', default='256', choices=['standard', '256', 'truecolor', 'windows'], metavar='Width', help='width')
+    parser.add_argument('-c', '--color-system', type=str, nargs='?', default='256', choices=['standard', '256', 'truecolor', 'windows'], metavar='Width', help='width')
+    parser.add_argument('--disable-pager', action='store_true', help='flag of disable pager')
     args = parser.parse_args()
 
     """ Deciding TextWidth """
@@ -101,8 +105,8 @@ def main():
     """ General Preparing """
     console = Console(color_system=args.color_system, width=target_width)
 
-    """ Make Rich """
-    console.print(make_rich(filepath, filetype))
+    """ Print Rich """
+    print_rich(filepath, filetype, console, not args.disable_pager)
 
 
 if __name__ == '__main__':
