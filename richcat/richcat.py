@@ -81,7 +81,7 @@ def print_rich(filepath, filetype, console, use_pager):
         maker.print(console, use_pager)
 
     else:
-        maker = SyntaxMaker(filepath)
+        maker = SyntaxMaker(filepath, filetype)
         maker.print(console, use_pager)
             
 
