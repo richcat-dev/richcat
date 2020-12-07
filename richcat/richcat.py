@@ -7,6 +7,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.console import RenderGroup
 
+from .modules.utils import extract_filename, extract_extension
 from .modules.rich_maker import SyntaxMaker, MarkdownMaker, TableMaker
 
 
@@ -51,8 +52,10 @@ def infer_filetype(filepath, filetype):
     filetype : str
         filetype
     """
+
+
     if filetype == 'auto':
-        return filepath, filepath.split('.')[-1]
+        return filepath, extract_extension(filepath)
     else:
         return filepath, filetype
 
