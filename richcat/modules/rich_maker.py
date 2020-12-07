@@ -82,19 +82,31 @@ class SyntaxMaker(AbstractRichMaker):
         return file_contents
 
     def _make_rich_text(self, file_contents):
-        filename = extract_filename(self.filepath)
-        ext = extract_extension(self.filepath)
-        if filename in DIC_LEXER_CONST.keys():
-            self.filetype = DIC_LEXER_CONST[filename]
-        elif ext in DIC_LEXER_WC.keys():
-            self.filetype = DIC_LEXER_WC[ext]
-        else:
-            print('from_path')
-            return Syntax.from_path(self.filepath, line_numbers=True)
-        
-        return Syntax(file_contents, self.filetype, line_numbers=True)
+        if self.filetype == 'auto':
+            # No richcat args of filetype
 
-        # return Syntax.from_path(self.filepath, line_numbers=True)
+            # Extract filename and extension from filepath
+            filename = extract_filename(self.filepath)
+            ext = extract_extension(self.filepath)
+            # Convert extension to alias
+            if filename in DIC_LEXER_CONST.keys():
+                self.filetype = DIC_LEXER_CONST[filename]
+            elif ext in DIC_LEXER_WC.keys():
+                self.filetype = DIC_LEXER_WC[ext]
+            else:
+                # If you cannot convert, guess from filepath
+                return Syntax.from_path(self.filepath, line_numbers=True)
+        else:
+            # Given richcat args of filetype
+
+            # Convert extension to alias
+            if self.filetype in DIC_LEXER_WC.keys():
+                self.filetype = DIC_LEXER_WC[self.filetype]
+            else:
+                # If you cannot convert, guess from filepath
+                return Syntax.from_path(self.filepath, line_numbers=True)
+
+        return Syntax(file_contents, self.filetype, line_numbers=True)
 
 
 class MarkdownMaker(AbstractRichMaker):
