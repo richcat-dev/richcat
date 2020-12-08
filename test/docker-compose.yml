@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  model:
+    build: ./model
+    container_name: qa-app_model
+    tty: true
+    volumes:
+      - ./model:/home/model
+    ports:
+      - "5000:5000"
+
+  web:
+    build: ./web
+    container_name: qa-app_web
+    tty: true
+    volumes:
+      - ./web:/home/web
+    ports:
+      - "8080:8080"
