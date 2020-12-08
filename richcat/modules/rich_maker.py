@@ -82,17 +82,6 @@ class SyntaxMaker(AbstractRichMaker):
         return file_contents
 
     def _make_rich_text(self, file_contents):
-        # # Extract filename from filepath
-        # filename = extract_filename(self.filepath)
-        # # Convert extension to alias
-        # if filename in DIC_LEXER_CONST.keys():
-        #     self.filetype = DIC_LEXER_CONST[filename]
-        # elif self.filetype in DIC_LEXER_WC.keys():
-        #     self.filetype = DIC_LEXER_WC[self.filetype]
-        # else:
-        #     # If you cannot convert, guess from filepath
-        #     return Syntax.from_path(self.filepath, line_numbers=True)
-        # # Instance Syntax
         return Syntax(file_contents, self.filetype, line_numbers=True)
 
 
