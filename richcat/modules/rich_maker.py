@@ -30,7 +30,7 @@ class AbstractRichMaker(ABC):
         self.filepath = filepath
         self.filetype = filetype
 
-    def print(self, console, use_pager):
+    def print(self, console, dic_style):
         """
         print rich text
 
@@ -38,11 +38,15 @@ class AbstractRichMaker(ABC):
         ----------
         console : rich.console.Console
             console
-        use_pager : bool
-            The flag whether use pager
+        dic_style : dict
+            style dict
+        
+        See Also
+        --------
+        richcat.richcat.interpret_style
         """
-        rich_text = self._make_rich_text(self._read_file())
-        if use_pager:
+        rich_text = self._make_rich_text(self._read_file(), dic_style)
+        if dic_style['pager']:
             with console.pager(styles=True):
                 console.print(rich_text)
         else:
@@ -56,7 +60,7 @@ class AbstractRichMaker(ABC):
         pass
 
     @abstractmethod
-    def _make_rich_text(self, file_contents):
+    def _make_rich_text(self, file_contents, dic_style):
         """
         rich maker method
 
@@ -64,11 +68,17 @@ class AbstractRichMaker(ABC):
         ---------
         file_contents : str
             file contents
-
+        dic_style : dict
+            style dict
+        
         Returns
         -------
         : str
             rich text
+
+        See Also
+        --------
+        richcat.rich_maker.AbstractRichMaker.print
         """
         return file_contents
 
@@ -81,7 +91,7 @@ class SyntaxMaker(AbstractRichMaker):
             file_contents = f.read()
         return file_contents
 
-    def _make_rich_text(self, file_contents):
+    def _make_rich_text(self, file_contents, dic_style):
         return Syntax(file_contents, self.filetype, line_numbers=True)
 
 
@@ -93,7 +103,7 @@ class MarkdownMaker(AbstractRichMaker):
             file_contents = f.read()
         return file_contents
 
-    def _make_rich_text(self, file_contents):
+    def _make_rich_text(self, file_contents, dic_style):
         return Markdown(file_contents)
 
 
@@ -107,15 +117,28 @@ class TableMaker(AbstractRichMaker):
                 lst_table.append(l.split(','))
         return lst_table
 
-    def _make_rich_text(self, file_contents):
+    def _make_rich_text(self, file_contents, dic_style):
         # Instance
         text = Table(show_header=True, header_style="bold magenta")
-        # Add columns
+        # Generate table
         columns = []
-        for col in range(len(file_contents[0])):
-            text.add_column(str(col))
-            columns += [col]
-        # Add rows
-        for row in file_contents:
-            text.add_row(*row)
+        if dic_style['header']:
+            # Use the 1st line as header
+
+            # Add columns
+            for col in file_contents[0]:
+                text.add_column(col)
+            # Add rows
+            for row in file_contents[1:]:
+                text.add_row(*row)
+        else:
+            # Use enumerate number as header
+            
+            # Add columns
+            for col in range(len(file_contents[0])):
+                text.add_column(str(col))
+                columns += [col]
+            # Add rows
+            for row in file_contents:
+                text.add_row(*row)
         return text
