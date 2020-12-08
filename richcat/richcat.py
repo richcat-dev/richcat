@@ -144,8 +144,6 @@ def main():
     parser.add_argument('--style', type=str, nargs='?', default='', metavar='Style', 
     help="""Style setting
 [[no]header][,[no]pager]""")
-    # parser.add_argument('--disable-pager', action='store_true', help='flag of disable pager')
-    # parser.add_argument('--use-header', action='store_true', help='flag of useing header on table')
     args = parser.parse_args()
 
     """ Infering FileType """
