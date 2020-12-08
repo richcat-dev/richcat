@@ -1,3 +1,5 @@
+import os
+
 from abc import ABC
 from abc import abstractmethod
 
@@ -6,6 +8,9 @@ from rich.table import Table
 from rich.syntax import Syntax
 from rich.panel import Panel
 from rich.console import RenderGroup
+
+from .utils import extract_filename, extract_extension
+from ._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
 
 
 class AbstractRichMaker(ABC):
@@ -28,7 +33,7 @@ class AbstractRichMaker(ABC):
     def print(self, console, use_pager):
         """
         print rich text
-        
+
         Parameters
         ----------
         console : rich.console.Console
@@ -43,7 +48,6 @@ class AbstractRichMaker(ABC):
         else:
             console.print(rich_text)
 
-
     @abstractmethod
     def _read_file(self):
         """
@@ -55,7 +59,7 @@ class AbstractRichMaker(ABC):
     def _make_rich_text(self, file_contents):
         """
         rich maker method
-        
+
         Paremters
         ---------
         file_contents : str
@@ -78,10 +82,7 @@ class SyntaxMaker(AbstractRichMaker):
         return file_contents
 
     def _make_rich_text(self, file_contents):
-        if self.filetype == 'auto':
-            return Syntax.from_path(self.filepath, line_numbers=True)
-        else:
-            return Syntax(file_contents, self.filetype, line_numbers=True)
+        return Syntax(file_contents, self.filetype, line_numbers=True)
 
 
 class MarkdownMaker(AbstractRichMaker):
