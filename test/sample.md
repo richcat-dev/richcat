@@ -13,3 +13,15 @@
 
 1. numerical list
 1. numerical list
+
+```
+import numpy as np
+print(np.array([1,2,3,4]))
+```
+
+aaaaaaaaa
+
+```python
+import numpy as np
+print(np.array([1,2,3,4]))
+```
