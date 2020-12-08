@@ -7,6 +7,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.console import RenderGroup
 
+from .modules._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
 from .modules.utils import extract_filename, extract_extension
 from .modules.rich_maker import SyntaxMaker, MarkdownMaker, TableMaker
 
@@ -55,7 +56,16 @@ def infer_filetype(filepath, filetype):
 
 
     if filetype == 'auto':
-        return filepath, extract_extension(filepath)
+        # Extract filename from filepath
+        filename = extract_filename(filepath)
+        filetype = extract_extension(filepath)
+        # Convert extension to alias
+        if filename in DIC_LEXER_CONST.keys():
+            return filepath, DIC_LEXER_CONST[filename]
+        elif filetype in DIC_LEXER_WC.keys():
+            return filepath, DIC_LEXER_WC[filetype]
+        else:
+            return filepath, filetype
     else:
         return filepath, filetype
 
