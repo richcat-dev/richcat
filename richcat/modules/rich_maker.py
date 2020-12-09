@@ -108,10 +108,10 @@ class AbstractRichMaker(ABC):
         # Get terminal width
         terminal_width = self._get_terminal_width()
         # Decide target width
-        if target_width < 1.0:
-            return int(terminal_width * target_width)
+        if target_width <= 1.0:
+            return int(float(terminal_width) * target_width)
         else:
-            return int(terminal_width)
+            return int(target_width)
 
     @abstractmethod
     def _read_file(self, filepath):
@@ -177,7 +177,7 @@ class MarkdownMaker(AbstractRichMaker):
         # Decide target width
         if target_width < 1.0:
             # Given width rate
-            return int(terminal_width * target_width)
+            return int(float(terminal_width) * target_width)
         elif math.isclose(target_width, 1.0):
             # Default
             MERGIN = 14
