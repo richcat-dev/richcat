@@ -12,6 +12,27 @@ from .modules.utils import extract_filename, extract_extension
 from .modules.rich_maker import SyntaxMaker, MarkdownMaker, TableMaker
 
 
+def is_error_input(args):
+    """
+    The function check input error
+
+    Parameters
+    ----------
+    args : argparse.Namespace
+        command line arguments
+
+    Returns
+    -------
+    : bool
+        whether input is error
+    """
+    # Is directory
+    if os.path.isdir(args.filepath):
+        console = Console()
+        console.print(r'[bold red]\[richcat error][/bold red]: "[bold green]' + args.filepath + '[/bold green]" is a directory.')
+        return True
+
+
 def decide_text_width(arg_width):
     """
     The function which decide text width.
@@ -141,10 +162,14 @@ def main():
     parser.add_argument('-t', '--filetype', type=str, nargs='?', default='auto', metavar='FileType', help='filetype')
     parser.add_argument('-w', '--width', type=str, nargs='?', default='1.0', metavar='Width', help='width')
     parser.add_argument('-c', '--color-system', type=str, nargs='?', default='256', choices=['standard', '256', 'truecolor', 'windows'], metavar='Width', help='width')
-    parser.add_argument('--style', type=str, nargs='?', default='', metavar='Style', 
-    help="""Style setting
+    parser.add_argument('--style', type=str, nargs='?', default='', metavar='Style',
+                        help="""Style setting
 [[no]header][,[no]pager]""")
     args = parser.parse_args()
+
+    """ Checking input error """
+    if is_error_input(args):
+        return
 
     """ Infering FileType """
     filepath, filetype = infer_filetype(args.filepath, args.filetype)
