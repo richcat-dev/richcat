@@ -4,6 +4,7 @@ from abc import ABC
 from abc import abstractmethod
 
 from rich.console import Console
+from rich.panel import Panel
 from rich.syntax import Syntax
 from rich.markdown import Markdown
 from rich.table import Table
@@ -176,7 +177,7 @@ class MarkdownMaker(AbstractRichMaker):
         return file_contents
 
     def _make_rich_text(self, file_contents, filetype, dic_style):
-        return Markdown(file_contents)
+        return Panel(Markdown(file_contents), padding=(1, 3, 1, 3))
 
 
 class TableMaker(AbstractRichMaker):
