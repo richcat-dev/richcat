@@ -176,27 +176,38 @@ class TableMaker(AbstractRichMaker):
         return lst_table
 
     def _make_rich_text(self, file_contents, filetype, dic_style):
+
+        def _make_table_text(text, columns, rows):
+            """
+            The function make table text
+
+            Parameters
+            ----------
+            text : rich.table.Table
+                table text
+            columns : list[str]
+                column text list
+            rows : list[str]
+                row text list
+            
+            Returns
+            -------
+            text : rich.table.Table
+                table text
+            """
+            for col in columns:
+                text.add_column(col)
+            for row in rows:
+                text.add_row(*row)
+            return text
+
         # Instance
         text = Table(show_header=True, header_style="bold magenta")
         # Generate table
-        columns = []
         if dic_style['header']:
             # Use the 1st line as header
-
-            # Add columns
-            for col in file_contents[0]:
-                text.add_column(col)
-            # Add rows
-            for row in file_contents[1:]:
-                text.add_row(*row)
+            text = _make_table_text(text, file_contents[0], file_contents[1:])
         else:
             # Use enumerate number as header
-
-            # Add columns
-            for col in range(len(file_contents[0])):
-                text.add_column(str(col))
-                columns += [col]
-            # Add rows
-            for row in file_contents:
-                text.add_row(*row)
+            text = _make_table_text(text, [str(col) for col in range(len(file_contents[0]))], file_contents)
         return text
