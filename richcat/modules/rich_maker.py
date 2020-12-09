@@ -54,7 +54,7 @@ class AbstractRichMaker(ABC):
         self.rich_text = self._make_rich_text(file_contents, filetype, dic_style)
 
         # Instance console
-        self.console = Console(color_system=color_system, width=self._decide_text_width(target_width))
+        self.console = Console(color_system=color_system, width=self._decide_console_width(target_width))
 
     def print(self, use_pager):
         """
@@ -77,7 +77,7 @@ class AbstractRichMaker(ABC):
         else:
             self.console.print(self.rich_text)
 
-    def _decide_text_width(self, target_width):
+    def _decide_console_width(self, target_width):
         """
         Deciding text width method
 
