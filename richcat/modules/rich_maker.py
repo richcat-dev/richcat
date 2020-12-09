@@ -10,6 +10,7 @@ from rich.syntax import Syntax
 from rich.markdown import Markdown
 from rich.table import Table
 
+from ._const import DIC_DEFAULT_VALUES, MD_PADDING, MD_MERGIN
 from .utils import extract_filename, extract_extension, calc_max_line_length
 from ._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
 
@@ -23,7 +24,7 @@ class AbstractRichMaker(ABC):
                  dic_style,
                  filepath=None,
                  file_contents=None,
-                 filetype='auto'):
+                 filetype=DIC_DEFAULT_VALUES['filetype']):
         """
         Constructor
 
@@ -89,7 +90,7 @@ class AbstractRichMaker(ABC):
         _, terminal_width = os.popen('stty size', 'r').read().split()
         return int(terminal_width)
 
-    def _decide_console_width(self, file_contents, target_width=1.0):
+    def _decide_console_width(self, file_contents, target_width=DIC_DEFAULT_VALUES['width']):
         """
         Deciding text width method
 
@@ -171,20 +172,19 @@ class SyntaxMaker(AbstractRichMaker):
 class MarkdownMaker(AbstractRichMaker):
     """ Markdown maker """
 
-    def _decide_console_width(self, file_contents, target_width=1.0):
+    def _decide_console_width(self, file_contents, target_width=DIC_DEFAULT_VALUES['width']):
         # Get terminal width
         terminal_width = self._get_terminal_width()
         # Decide target width
-        if target_width < 1.0:
-            # Given width rate
+        if target_width < DIC_DEFAULT_VALUES['width']:
+            # Given width rate pattern
             return int(float(terminal_width) * target_width)
-        elif math.isclose(target_width, 1.0):
-            # Default
-            MERGIN = 14
-            text_width = calc_max_line_length(file_contents) + MERGIN
+        elif math.isclose(target_width, DIC_DEFAULT_VALUES['width']):
+            # Default pattern
+            text_width = calc_max_line_length(file_contents) + MD_MERGIN
             return text_width if text_width < terminal_width else terminal_width
         else:
-            # Given direct target width
+            # Given target width directly pattern
             return int(target_width)
 
     def _read_file(self, filepath):
@@ -193,7 +193,7 @@ class MarkdownMaker(AbstractRichMaker):
         return file_contents
 
     def _make_rich_text(self, file_contents, filetype, dic_style):
-        return Panel(Markdown(file_contents), padding=(1, 3, 1, 3))
+        return Panel(Markdown(file_contents), padding=MD_PADDING)
 
 
 class TableMaker(AbstractRichMaker):
