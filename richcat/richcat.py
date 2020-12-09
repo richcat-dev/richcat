@@ -26,11 +26,21 @@ def is_error_input(args):
     : bool
         whether input is error
     """
+    console = Console()
+    # Is exists
+    if not os.path.exists(args.filepath):
+        console.print(r'[bold red]\[richcat error][/bold red]: "[bold green]' + args.filepath + '[/bold green]": No such file or directory.')
+        return True
     # Is directory
     if os.path.isdir(args.filepath):
-        console = Console()
         console.print(r'[bold red]\[richcat error][/bold red]: "[bold green]' + args.filepath + '[/bold green]" is a directory.')
         return True
+    # Is able to access
+    if not os.access(args.filepath, os.R_OK):
+        console.print(r'[bold red]\[richcat error][/bold red]: "[bold green]' + args.filepath + '[/bold green]": Permission denied.')
+        return True
+    
+    return False
 
 
 def decide_text_width(arg_width):
