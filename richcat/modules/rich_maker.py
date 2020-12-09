@@ -4,11 +4,9 @@ from abc import ABC
 from abc import abstractmethod
 
 from rich.console import Console
+from rich.syntax import Syntax
 from rich.markdown import Markdown
 from rich.table import Table
-from rich.syntax import Syntax
-from rich.panel import Panel
-from rich.console import RenderGroup
 
 from .utils import extract_filename, extract_extension
 from ._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
@@ -54,7 +52,7 @@ class AbstractRichMaker(ABC):
         self.rich_text = self._make_rich_text(file_contents, filetype, dic_style)
 
         # Instance console
-        self.console = Console(color_system=color_system, width=self._decide_console_width(target_width))
+        self.console = Console(color_system=color_system, width=self._decide_console_width(file_contents, target_width))
 
     def print(self, use_pager):
         """
@@ -77,12 +75,14 @@ class AbstractRichMaker(ABC):
         else:
             self.console.print(self.rich_text)
 
-    def _decide_console_width(self, target_width):
+    def _decide_console_width(self, file_contents, target_width=1.0):
         """
         Deciding text width method
 
         Parameters
         ----------
+        file_contents : str
+            file contents (default: 1.0)
         target_width : float
             target_width
 
@@ -91,12 +91,26 @@ class AbstractRichMaker(ABC):
         : int
             target width
         """
-        if target_width <= 1.0:
+
+        def get_terminal_width():
+            """
+            The function get terminal width
+
+            Returns
+            -------
+            terminal_width : float
+                terminal width
+            """
             _, terminal_width = os.popen('stty size', 'r').read().split()
-            terminal_width = float(terminal_width)
+            return float(terminal_width)
+
+        # Get terminal width
+        terminal_width = get_terminal_width()
+        # Decide target width
+        if target_width < 1.0:
             return int(terminal_width * target_width)
         else:
-            return int(target_width)
+            return int(terminal_width)
 
     @abstractmethod
     def _read_file(self, filepath):
@@ -189,7 +203,7 @@ class TableMaker(AbstractRichMaker):
                 column text list
             rows : list[str]
                 row text list
-            
+
             Returns
             -------
             text : rich.table.Table
