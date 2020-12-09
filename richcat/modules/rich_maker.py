@@ -9,7 +9,7 @@ from rich.syntax import Syntax
 from rich.markdown import Markdown
 from rich.table import Table
 
-from .utils import extract_filename, extract_extension
+from .utils import extract_filename, extract_extension, calc_max_line_length
 from ._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
 
 
@@ -76,6 +76,18 @@ class AbstractRichMaker(ABC):
         else:
             self.console.print(self.rich_text)
 
+    def _get_terminal_width(self):
+        """
+        Getting terminal width method
+
+        Returns
+        -------
+        terminal_width : int
+            terminal width
+        """
+        _, terminal_width = os.popen('stty size', 'r').read().split()
+        return int(terminal_width)
+
     def _decide_console_width(self, file_contents, target_width=1.0):
         """
         Deciding text width method
@@ -92,21 +104,8 @@ class AbstractRichMaker(ABC):
         : int
             target width
         """
-
-        def get_terminal_width():
-            """
-            The function get terminal width
-
-            Returns
-            -------
-            terminal_width : float
-                terminal width
-            """
-            _, terminal_width = os.popen('stty size', 'r').read().split()
-            return float(terminal_width)
-
         # Get terminal width
-        terminal_width = get_terminal_width()
+        terminal_width = self._get_terminal_width()
         # Decide target width
         if target_width < 1.0:
             return int(terminal_width * target_width)
@@ -158,7 +157,7 @@ class AbstractRichMaker(ABC):
 
 class SyntaxMaker(AbstractRichMaker):
     """ Syntax maker """
-
+    
     def _read_file(self, filepath):
         with open(filepath) as f:
             file_contents = f.read()
@@ -170,6 +169,19 @@ class SyntaxMaker(AbstractRichMaker):
 
 class MarkdownMaker(AbstractRichMaker):
     """ Markdown maker """
+
+    def _decide_console_width(self, file_contents, target_width=1.0):
+        # Get terminal width
+        terminal_width = self._get_terminal_width()
+        # Decide target width
+        if target_width < 1.0:
+            return int(terminal_width * target_width)
+        else:
+            # mergin of target width
+            MERGIN = 14
+            # calc target width
+            text_width = calc_max_line_length(file_contents)
+            return text_width if text_width + MERGIN < terminal_width else terminal_width
 
     def _read_file(self, filepath):
         with open(filepath) as f:
