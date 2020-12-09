@@ -157,7 +157,7 @@ class AbstractRichMaker(ABC):
 
 class SyntaxMaker(AbstractRichMaker):
     """ Syntax maker """
-    
+
     def _read_file(self, filepath):
         with open(filepath) as f:
             file_contents = f.read()
@@ -180,8 +180,8 @@ class MarkdownMaker(AbstractRichMaker):
             # mergin of target width
             MERGIN = 14
             # calc target width
-            text_width = calc_max_line_length(file_contents)
-            return text_width if text_width + MERGIN < terminal_width else terminal_width
+            text_width = calc_max_line_length(file_contents) + MERGIN
+            return text_width if text_width < terminal_width else terminal_width
 
     def _read_file(self, filepath):
         with open(filepath) as f:
