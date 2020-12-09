@@ -1,4 +1,5 @@
 import os
+import math
 
 from abc import ABC
 from abc import abstractmethod
@@ -175,13 +176,16 @@ class MarkdownMaker(AbstractRichMaker):
         terminal_width = self._get_terminal_width()
         # Decide target width
         if target_width < 1.0:
+            # Given width rate
             return int(terminal_width * target_width)
-        else:
-            # mergin of target width
+        elif math.isclose(target_width, 1.0):
+            # Default
             MERGIN = 14
-            # calc target width
             text_width = calc_max_line_length(file_contents) + MERGIN
             return text_width if text_width < terminal_width else terminal_width
+        else:
+            # Given direct target width
+            return int(target_width)
 
     def _read_file(self, filepath):
         with open(filepath) as f:
