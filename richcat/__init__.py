@@ -1,11 +1,3 @@
-__copyright__    = 'Copyright (C) 2020 Yuta Yamamoto, Shotaro Kataoka'
-__version__      = '0.4.0'
-__license__      = 'MIT'
-__author__       = 'Yuta Yamamoto, Shotaro Kataoka'
-__author_email__ = 'automatuX78@gmail.com'
-__url__          = 'https://github.com/richcat-dev/richcat'
-
-
 from .richcat import infer_filetype, print_rich, is_error_input
 from .modules.consts._const import DIC_DEFAULT_VALUES
 

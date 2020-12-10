@@ -7,7 +7,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.console import RenderGroup
 
-from .__init__ import __version__
+from .__information__ import __version__
 from .modules.consts._const import LST_COLOR_SYSTEM_CHOISES, DIC_DEFAULT_VALUES
 from .modules.consts._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
 from .modules.utils import extract_filename, extract_extension
