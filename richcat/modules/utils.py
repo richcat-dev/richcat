@@ -33,3 +33,37 @@ def extract_extension(path):
         file extension
     """
     return extract_filename(path).split('.', 1)[-1]
+
+
+def count_line_length(file_contents):
+    """
+    The function count line length
+
+    Parameters
+    ----------
+    file_contents : str
+        file contents
+
+    Returns
+    -------
+    : list[int]
+        list of line length
+    """
+    return [len(line) for line in file_contents.splitlines()]
+
+
+def calc_max_line_length(file_contents):
+    """
+    The function calculate max line length
+
+    Parameters
+    ----------
+    file_contents : str
+        file contents
+
+    Returns
+    -------
+    : int
+        max line length
+    """
+    return max(count_line_length(file_contents))
