@@ -1,5 +1,6 @@
 from .richcat import infer_filetype, print_rich, is_error_input
 from .modules.consts._const import DIC_DEFAULT_VALUES
+from .__information__ import __version__
 
 
 def richcat(filepath, **args):
@@ -40,3 +41,4 @@ def richcat(filepath, **args):
 
     """ Print Rich """
     print_rich(filepath, filetype, float(args.width), args.color_system, args.style)
+
