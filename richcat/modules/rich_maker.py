@@ -10,7 +10,7 @@ from rich.syntax import Syntax
 from rich.markdown import Markdown
 from rich.table import Table
 
-from ._const import DIC_DEFAULT_VALUES, MD_PADDING, MD_MERGIN
+from ._const import DIC_DEFAULT_VALUES, SYNTAX_MERGIN, MD_PADDING, MD_MERGIN
 from .utils import extract_filename, extract_extension, calc_max_line_length
 from ._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
 
@@ -159,6 +159,21 @@ class AbstractRichMaker(ABC):
 
 class SyntaxMaker(AbstractRichMaker):
     """ Syntax maker """
+
+    def _decide_console_width(self, file_contents, target_width=DIC_DEFAULT_VALUES['width']):
+        # Get terminal width
+        terminal_width = self._get_terminal_width()
+        # Decide target width
+        if target_width < DIC_DEFAULT_VALUES['width']:
+            # Given width rate pattern
+            return int(float(terminal_width) * target_width)
+        elif math.isclose(target_width, DIC_DEFAULT_VALUES['width']):
+            # Default pattern
+            text_width = calc_max_line_length(file_contents) + SYNTAX_MERGIN
+            return text_width if text_width < terminal_width else terminal_width
+        else:
+            # Given target width directly pattern
+            return int(target_width)
 
     def _read_file(self, filepath):
         with open(filepath) as f:
