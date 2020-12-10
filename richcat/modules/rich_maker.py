@@ -166,7 +166,7 @@ class SyntaxMaker(AbstractRichMaker):
         return file_contents
 
     def _make_rich_text(self, file_contents, filetype, dic_style):
-        return Syntax(file_contents, filetype, line_numbers=True)
+        return Syntax(file_contents, filetype, line_numbers=True, word_wrap=True)
 
 
 class MarkdownMaker(AbstractRichMaker):
