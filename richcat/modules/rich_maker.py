@@ -1,16 +1,17 @@
 import os
+import math
 
 from abc import ABC
 from abc import abstractmethod
 
 from rich.console import Console
+from rich.panel import Panel
+from rich.syntax import Syntax
 from rich.markdown import Markdown
 from rich.table import Table
-from rich.syntax import Syntax
-from rich.panel import Panel
-from rich.console import RenderGroup
 
-from .utils import extract_filename, extract_extension
+from ._const import DIC_DEFAULT_VALUES, SYNTAX_MERGIN, MD_PADDING, MD_MERGIN
+from .utils import extract_filename, extract_extension, calc_max_line_length
 from ._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
 
 
@@ -23,7 +24,7 @@ class AbstractRichMaker(ABC):
                  dic_style,
                  filepath=None,
                  file_contents=None,
-                 filetype='auto'):
+                 filetype=DIC_DEFAULT_VALUES['filetype']):
         """
         Constructor
 
@@ -54,7 +55,7 @@ class AbstractRichMaker(ABC):
         self.rich_text = self._make_rich_text(file_contents, filetype, dic_style)
 
         # Instance console
-        self.console = Console(color_system=color_system, width=self._decide_console_width(target_width))
+        self.console = Console(color_system=color_system, width=self._decide_console_width(file_contents, target_width))
 
     def print(self, use_pager):
         """
@@ -77,12 +78,26 @@ class AbstractRichMaker(ABC):
         else:
             self.console.print(self.rich_text)
 
-    def _decide_console_width(self, target_width):
+    def _get_terminal_width(self):
+        """
+        Getting terminal width method
+
+        Returns
+        -------
+        terminal_width : int
+            terminal width
+        """
+        _, terminal_width = os.popen('stty size', 'r').read().split()
+        return int(terminal_width)
+
+    def _decide_console_width(self, file_contents, target_width=DIC_DEFAULT_VALUES['width']):
         """
         Deciding text width method
 
         Parameters
         ----------
+        file_contents : str
+            file contents (default: 1.0)
         target_width : float
             target_width
 
@@ -91,10 +106,11 @@ class AbstractRichMaker(ABC):
         : int
             target width
         """
+        # Get terminal width
+        terminal_width = self._get_terminal_width()
+        # Decide target width
         if target_width <= 1.0:
-            _, terminal_width = os.popen('stty size', 'r').read().split()
-            terminal_width = float(terminal_width)
-            return int(terminal_width * target_width)
+            return int(float(terminal_width) * target_width)
         else:
             return int(target_width)
 
@@ -144,25 +160,55 @@ class AbstractRichMaker(ABC):
 class SyntaxMaker(AbstractRichMaker):
     """ Syntax maker """
 
+    def _decide_console_width(self, file_contents, target_width=DIC_DEFAULT_VALUES['width']):
+        # Get terminal width
+        terminal_width = self._get_terminal_width()
+        # Decide target width
+        if target_width < DIC_DEFAULT_VALUES['width']:
+            # Given width rate pattern
+            return int(float(terminal_width) * target_width)
+        elif math.isclose(target_width, DIC_DEFAULT_VALUES['width']):
+            # Default pattern
+            text_width = calc_max_line_length(file_contents) + SYNTAX_MERGIN
+            return text_width if text_width < terminal_width else terminal_width
+        else:
+            # Given target width directly pattern
+            return int(target_width)
+
     def _read_file(self, filepath):
         with open(filepath) as f:
             file_contents = f.read()
         return file_contents
 
     def _make_rich_text(self, file_contents, filetype, dic_style):
-        return Syntax(file_contents, filetype, line_numbers=True)
+        return Syntax(file_contents, filetype, line_numbers=True, word_wrap=True)
 
 
 class MarkdownMaker(AbstractRichMaker):
     """ Markdown maker """
 
+    def _decide_console_width(self, file_contents, target_width=DIC_DEFAULT_VALUES['width']):
+        # Get terminal width
+        terminal_width = self._get_terminal_width()
+        # Decide target width
+        if target_width < DIC_DEFAULT_VALUES['width']:
+            # Given width rate pattern
+            return int(float(terminal_width) * target_width)
+        elif math.isclose(target_width, DIC_DEFAULT_VALUES['width']):
+            # Default pattern
+            text_width = calc_max_line_length(file_contents) + MD_MERGIN
+            return text_width if text_width < terminal_width else terminal_width
+        else:
+            # Given target width directly pattern
+            return int(target_width)
+
     def _read_file(self, filepath):
         with open(filepath) as f:
             file_contents = f.read()
         return file_contents
 
     def _make_rich_text(self, file_contents, filetype, dic_style):
-        return Markdown(file_contents)
+        return Panel(Markdown(file_contents), padding=MD_PADDING)
 
 
 class TableMaker(AbstractRichMaker):
@@ -189,7 +235,7 @@ class TableMaker(AbstractRichMaker):
                 column text list
             rows : list[str]
                 row text list
-            
+
             Returns
             -------
             text : rich.table.Table

@@ -7,6 +7,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.console import RenderGroup
 
+from .modules._const import LST_COLOR_SYSTEM_CHOISES, DIC_DEFAULT_VALUES
 from .modules._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
 from .modules.utils import extract_filename, extract_extension
 from .modules.rich_maker import SyntaxMaker, MarkdownMaker, TableMaker
@@ -62,7 +63,7 @@ def infer_filetype(filepath, filetype):
         filetype
     """
 
-    if filetype == 'auto':
+    if filetype == DIC_DEFAULT_VALUES['filetype']:
         # Extract filename from filepath
         filename = extract_filename(filepath)
         filetype = extract_extension(filepath)
@@ -148,9 +149,11 @@ def main():
     """ Args """
     parser = argparse.ArgumentParser(description="RichCat", formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('filepath', type=str, metavar='FilePath', help='file path')
-    parser.add_argument('-t', '--filetype', type=str, nargs='?', default='auto', metavar='FileType', help='filetype')
-    parser.add_argument('-w', '--width', type=str, nargs='?', default='1.0', metavar='Width', help='width')
-    parser.add_argument('-c', '--color-system', type=str, nargs='?', default='256', choices=['standard', '256', 'truecolor', 'windows'], metavar='Width', help='width')
+    parser.add_argument('-t', '--filetype', type=str, nargs='?', default=DIC_DEFAULT_VALUES['filetype'], metavar='FileType', help='filetype')
+    parser.add_argument('-w', '--width', type=str, nargs='?', default=str(DIC_DEFAULT_VALUES['width']), metavar='Width', help='width')
+    parser.add_argument('-c', '--color-system', type=str, nargs='?', default=DIC_DEFAULT_VALUES['color_system'], choices=LST_COLOR_SYSTEM_CHOISES, metavar='ColorSystem',
+                        help="""color system (default: '256')
+['standard', '256', 'truecolor', 'windows']""")
     parser.add_argument('--style', type=str, nargs='?', default='', metavar='Style',
                         help="""Style setting
 [[no]header][,[no]pager]""")
