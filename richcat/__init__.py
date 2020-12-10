@@ -1,6 +1,6 @@
 from .richcat import infer_filetype, print_rich, is_error_input
 from .modules.consts._const import DIC_DEFAULT_VALUES
-from .__information__ import __version__
+from .__information__ import __copyright__, __version__, __license__, __author__, __author_email__, __url__
 
 
 def richcat(filepath, **args):
