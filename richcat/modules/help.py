@@ -19,8 +19,6 @@ richcat <OPTIONS> <FILE>
 ```js
 -h, --help                  | 'Show help in English.'
                             |
-    --help-japanese         | 'Show help in Japanese.'
-                            |
 -V, --version               | 'Show version.'
                             |
 -t, --filetype <STRING>     | 'Specify file type.'
