@@ -30,6 +30,7 @@ def richcat(filepath, **args):
             self.width = args['width'] if 'width' in args.keys() else DIC_DEFAULT_VALUES['width']
             self.color_system = args['color_system'] if 'color_system' in args.keys() else DIC_DEFAULT_VALUES['color_system']
             self.style = args['style'] if 'style' in args.keys() else ''
+            self.help = args['help'] if 'help' in args.keys() else False
     args = Args()
 
     exec_richcat(args)
