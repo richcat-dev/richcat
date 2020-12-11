@@ -12,6 +12,7 @@ from .modules.consts._const import LST_COLOR_SYSTEM_CHOISES, DIC_DEFAULT_VALUES
 from .modules.consts._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
 from .modules.exceptions.exception import *
 from .modules.utils import extract_filename, extract_extension
+from .modules.help import print_help
 
 from .modules.rich_makers.syntax_maker import SyntaxMaker
 from .modules.rich_makers.markdown_maker import MarkdownMaker
@@ -143,7 +144,7 @@ def print_rich(filetype, target_width, color_system, style, filepath=None, file_
 
 def main():
     """ Args """
-    parser = argparse.ArgumentParser(description="RichCat", formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(description="RichCat", formatter_class=argparse.RawTextHelpFormatter, add_help=False)
     parser.add_argument('filepath', type=str, metavar='FilePath', nargs='?', default=None, help='file path')
     parser.add_argument('-V', '--version', action='version', version='%%(prog)s %s' % __version__)
     parser.add_argument('-t', '--filetype', type=str, nargs='?', default=DIC_DEFAULT_VALUES['filetype'], metavar='FileType', help='filetype')
@@ -154,20 +155,26 @@ def main():
     parser.add_argument('--style', type=str, nargs='?', default='', metavar='Style',
                         help="""Style setting
     [[no]header][,[no]pager]""")
+    parser.add_argument('-h', '--help', action='store_true')
     args = parser.parse_args()
 
-    if args.filepath is None:
-        if args.filetype==DIC_DEFAULT_VALUES['filetype']:
-            args.filetype = 'text'
-        args.file_contents = ''.join(sys.stdin.readlines())
-    else:
-        args.file_contents = None
+    if not args.help:
+        if args.filepath is None:
+            if args.filetype==DIC_DEFAULT_VALUES['filetype']:
+                args.filetype = 'text'
+            args.file_contents = ''.join(sys.stdin.readlines())
+        else:
+            args.file_contents = None
     """ Execute richcat """
     richcat(args)
 
 
 def richcat(args):
     try:
+        """ help """
+        if args.help:
+            args.file_contents,args.filetype,args.filepath = print_help()
+
         """ Checking input error """
         check_input_error(args)
 
