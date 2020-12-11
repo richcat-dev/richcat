@@ -7,6 +7,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.console import RenderGroup
 
+from .__init__ import __version__
 from .modules.consts._const import LST_COLOR_SYSTEM_CHOISES, DIC_DEFAULT_VALUES
 from .modules.consts._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
 from .modules.utils import extract_filename, extract_extension
@@ -152,6 +153,7 @@ def main():
     """ Args """
     parser = argparse.ArgumentParser(description="RichCat", formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('filepath', type=str, metavar='FilePath', help='file path')
+    parser.add_argument('-V', '--version', action='version', version='%%(prog)s %s' % __version__)
     parser.add_argument('-t', '--filetype', type=str, nargs='?', default=DIC_DEFAULT_VALUES['filetype'], metavar='FileType', help='filetype')
     parser.add_argument('-w', '--width', type=str, nargs='?', default=str(DIC_DEFAULT_VALUES['width']), metavar='Width', help='width')
     parser.add_argument('-c', '--color-system', type=str, nargs='?', default=DIC_DEFAULT_VALUES['color_system'], choices=LST_COLOR_SYSTEM_CHOISES, metavar='ColorSystem',
