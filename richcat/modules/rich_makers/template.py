@@ -80,8 +80,13 @@ class AbstractRichMaker(ABC):
         terminal_width : int
             terminal width
         """
-        _, terminal_width = os.popen('stty size', 'r').read().split()
-        return int(terminal_width)
+        try:
+            _, terminal_width = os.popen('stty size', 'r').read().split()
+            return int(terminal_width)
+        except ValueError:
+            console = Console()
+            console.print(r'[bold red]\[richcat error][/bold red]: Could not get terminal width. Please give terminal width by using "-w" option.')
+            raise
 
     def _decide_console_width(self, file_contents, target_width=DIC_DEFAULT_VALUES['width']):
         """
