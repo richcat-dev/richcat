@@ -172,7 +172,10 @@ def richcat(args):
         filepath, filetype = infer_filetype(args.filepath, args.filetype)
 
         """ Print Rich """
-        print_rich(filepath, filetype, float(args.width), args.color_system, args.style)
+        try:
+            print_rich(filepath, filetype, float(args.width), args.color_system, args.style)
+        except BrokenPipeError:
+            raise RichcatBrokenPipeError()
     except Exception as e:
         if 'print_error' in dir(e):
             e.print_error()
