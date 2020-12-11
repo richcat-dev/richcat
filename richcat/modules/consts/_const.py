@@ -4,7 +4,7 @@ LST_COLOR_SYSTEM_CHOISES = ['standard', '256', 'truecolor', 'windows']
 DIC_DEFAULT_VALUES = {
     'color_system': '256',
     'filetype': 'auto',
-    'width': 1.0
+    'width': 1.0,
 }
 
 SYNTAX_MERGIN = 4 + 4
