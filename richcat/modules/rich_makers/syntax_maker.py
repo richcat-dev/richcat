@@ -11,18 +11,24 @@ class SyntaxMaker(AbstractRichMaker):
     """ Syntax maker """
 
     def _decide_console_width(self, file_contents, target_width=DIC_DEFAULT_VALUES['width']):
-        # Get terminal width
-        terminal_width = self._get_terminal_width()
         # Decide target width
         if target_width < DIC_DEFAULT_VALUES['width']:
-            # Given width rate pattern
+            # -- Given width rate pattern
+            # Get terminal width
+            terminal_width = self._get_terminal_width()
+            # Calculate target width
             return int(float(terminal_width) * target_width)
         elif math.isclose(target_width, DIC_DEFAULT_VALUES['width']):
-            # Default pattern
+            # -- Default pattern
+            # Get terminal width
+            terminal_width = self._get_terminal_width()
+            # Get text width
             text_width = calc_max_line_length(file_contents) + SYNTAX_MERGIN
+            # Calculate terminal width
+            print(terminal_width)
             return text_width if text_width < terminal_width else terminal_width
         else:
-            # Given target width directly pattern
+            # -- Given target width directly pattern
             return int(target_width)
 
     def _read_file(self, filepath):
