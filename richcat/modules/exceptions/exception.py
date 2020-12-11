@@ -101,3 +101,11 @@ class RichcatTerminalWidthGetError(AbstractRichcatError):
     """
     def print_error(self):
         self.exec_print('Cloud not get terminal width. Please give terminal width by using "width" option.')
+
+class RichcatBrokenPipeError(AbstractRichcatError):
+    """ 
+    RichcatBrokenPipeError class
+    Raise : If pipe is broken.
+    """
+    def print_error(self):
+        pass
