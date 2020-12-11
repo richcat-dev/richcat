@@ -28,6 +28,8 @@ def check_input_error(args):
         command line arguments
     """
     # Is exists
+    if args.filepath is None:
+        return
     if not os.path.exists(args.filepath):
         raise RichcatFileNotFoundError(args.filepath)
     # Is directory
@@ -105,7 +107,7 @@ def interpret_style(style):
     return dic_style
 
 
-def print_rich(filepath, filetype, target_width, color_system, style):
+def print_rich(filetype, target_width, color_system, style, filepath=None, file_contents=None):
     """
     The function which make rich text
 
@@ -127,15 +129,15 @@ def print_rich(filepath, filetype, target_width, color_system, style):
 
     # Print
     if filetype == 'md':
-        maker = MarkdownMaker(target_width, color_system, dic_style, filepath=filepath)
+        maker = MarkdownMaker(target_width, color_system, dic_style, filepath=filepath, file_contents=file_contents)
         maker.print(dic_style['pager'])
 
     elif filetype == 'csv':
-        maker = TableMaker(target_width, color_system, dic_style, filepath=filepath)
+        maker = TableMaker(target_width, color_system, dic_style, filepath=filepath, file_contents=file_contents)
         maker.print(dic_style['pager'])
 
     else:
-        maker = SyntaxMaker(target_width, color_system, dic_style, filepath=filepath, filetype=filetype)
+        maker = SyntaxMaker(target_width, color_system, dic_style, filepath=filepath, filetype=filetype, file_contents=file_contents)
         maker.print(dic_style['pager'])
 
 
@@ -152,13 +154,14 @@ def main():
     parser.add_argument('--style', type=str, nargs='?', default='', metavar='Style',
                         help="""Style setting
     [[no]header][,[no]pager]""")
-    parser.add_argument('--silent', action='store_true', help='silent mode')
     args = parser.parse_args()
 
     if args.filepath is None:
-        if not args.silent:
-            print('File path >> ')
-        args.filepath = sys.stdin.readline().strip('\n')
+        if args.filetype==DIC_DEFAULT_VALUES['filetype']:
+            args.filetype = 'text'
+        args.file_contents = ''.join(sys.stdin.readlines())
+    else:
+        args.file_contents = None
     """ Execute richcat """
     richcat(args)
 
@@ -172,7 +175,10 @@ def richcat(args):
         filepath, filetype = infer_filetype(args.filepath, args.filetype)
 
         """ Print Rich """
-        print_rich(filepath, filetype, float(args.width), args.color_system, args.style)
+        try:
+            print_rich(filetype, float(args.width), args.color_system, args.style, filepath=filepath, file_contents=args.file_contents)
+        except BrokenPipeError:
+            raise RichcatBrokenPipeError()
     except Exception as e:
         if 'print_error' in dir(e):
             e.print_error()
