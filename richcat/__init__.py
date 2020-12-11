@@ -3,7 +3,7 @@ from .modules.consts._const import DIC_DEFAULT_VALUES
 from .__information__ import __copyright__, __version__, __license__, __author__, __author_email__, __url__
 
 
-def richcat(filepath, **args):
+def richcat(filepath=None, file_contents=None, **args):
     """
     The richcat function called from Python script
 
@@ -22,11 +22,20 @@ def richcat(filepath, **args):
     -------
 
     """
-
+    
+    if ((filepath is None) and (file_contents is None)):
+        file_contents = 'Please input `filepath` or `file_contents`.'
+        args['filetype'] = 'md'
+    if filepath is not None:
+        file_contents = None
     class Args():
         def __init__(self):
             self.filepath = filepath
-            self.filetype = args['filetype'] if 'filetype' in args.keys() else DIC_DEFAULT_VALUES['filetype']
+            self.file_contents = file_contents
+            if file_contents is not None:
+                self.filetype = args['filetype'] if 'filetype' in args.keys() else 'text'
+            else:
+                self.filetype = args['filetype'] if 'filetype' in args.keys() else DIC_DEFAULT_VALUES['filetype']
             self.width = args['width'] if 'width' in args.keys() else DIC_DEFAULT_VALUES['width']
             self.color_system = args['color_system'] if 'color_system' in args.keys() else DIC_DEFAULT_VALUES['color_system']
             self.style = args['style'] if 'style' in args.keys() else ''
