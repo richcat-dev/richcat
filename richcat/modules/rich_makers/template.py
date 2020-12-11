@@ -85,7 +85,7 @@ class AbstractRichMaker(ABC):
             return int(terminal_width)
         except ValueError:
             console = Console()
-            console.print(r'[bold red]\[richcat error][/bold red]: Cloud not get terminal width. Please give terminal width by using "-w" option.')
+            console.print(r'[bold red]\[richcat error][/bold red]: Cloud not get terminal width. Please give terminal width by using "width" option.')
             raise
 
     def _decide_console_width(self, file_contents, target_width=DIC_DEFAULT_VALUES['width']):
