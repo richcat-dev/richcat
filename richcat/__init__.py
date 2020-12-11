@@ -1,13 +1,6 @@
-__copyright__    = 'Copyright (C) 2020 Yuta Yamamoto, Shotaro Kataoka'
-__version__      = '0.4.0'
-__license__      = 'MIT'
-__author__       = 'Yuta Yamamoto, Shotaro Kataoka'
-__author_email__ = 'automatuX78@gmail.com'
-__url__          = 'https://github.com/richcat-dev/richcat'
-
-
 from .richcat import infer_filetype, print_rich, is_error_input
 from .modules.consts._const import DIC_DEFAULT_VALUES
+from .__information__ import __copyright__, __version__, __license__, __author__, __author_email__, __url__
 
 
 def richcat(filepath, **args):
@@ -48,3 +41,4 @@ def richcat(filepath, **args):
 
     """ Print Rich """
     print_rich(filepath, filetype, float(args.width), args.color_system, args.style)
+
