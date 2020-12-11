@@ -142,7 +142,7 @@ def print_rich(filepath, filetype, target_width, color_system, style):
 def main():
     """ Args """
     parser = argparse.ArgumentParser(description="RichCat", formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument('filepath', type=str, metavar='FilePath', help='file path')
+    parser.add_argument('filepath', type=str, metavar='FilePath', nargs='?', default=None, help='file path')
     parser.add_argument('-V', '--version', action='version', version='%%(prog)s %s' % __version__)
     parser.add_argument('-t', '--filetype', type=str, nargs='?', default=DIC_DEFAULT_VALUES['filetype'], metavar='FileType', help='filetype')
     parser.add_argument('-w', '--width', type=str, nargs='?', default=str(DIC_DEFAULT_VALUES['width']), metavar='Width', help='width')
@@ -152,8 +152,13 @@ def main():
     parser.add_argument('--style', type=str, nargs='?', default='', metavar='Style',
                         help="""Style setting
     [[no]header][,[no]pager]""")
+    parser.add_argument('--silent', action='store_true', help='silent mode')
     args = parser.parse_args()
 
+    if args.filepath is None:
+        if not args.silent:
+            print('File path >> ')
+        args.filepath = sys.stdin.readline().strip('\n')
     """ Execute richcat """
     richcat(args)
 
