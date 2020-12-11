@@ -7,10 +7,13 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.console import RenderGroup
 
-from .modules._const import LST_COLOR_SYSTEM_CHOISES, DIC_DEFAULT_VALUES
-from .modules._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
+from .modules.consts._const import LST_COLOR_SYSTEM_CHOISES, DIC_DEFAULT_VALUES
+from .modules.consts._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
 from .modules.utils import extract_filename, extract_extension
-from .modules.rich_maker import SyntaxMaker, MarkdownMaker, TableMaker
+
+from .modules.rich_makers.syntax_maker import SyntaxMaker
+from .modules.rich_makers.markdown_maker import MarkdownMaker
+from .modules.rich_makers.table_maker import TableMaker
 
 
 def is_error_input(args):
