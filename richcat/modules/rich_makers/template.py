@@ -6,6 +6,7 @@ from abc import abstractmethod
 from rich.console import Console
 
 from ..consts._const import DIC_DEFAULT_VALUES
+from ..exceptions.exception import *
 
 
 class AbstractRichMaker(ABC):
@@ -84,9 +85,7 @@ class AbstractRichMaker(ABC):
             _, terminal_width = os.popen('stty size', 'r').read().split()
             return int(terminal_width)
         except ValueError:
-            console = Console()
-            console.print(r'[bold red]\[richcat error][/bold red]: Cloud not get terminal width. Please give terminal width by using "width" option.')
-            raise
+            raise RichcatTerminalWidthGetError()
 
     def _decide_console_width(self, file_contents, target_width=DIC_DEFAULT_VALUES['width']):
         """
