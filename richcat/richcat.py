@@ -7,13 +7,19 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.console import RenderGroup
 
-from .modules._const import LST_COLOR_SYSTEM_CHOISES, DIC_DEFAULT_VALUES
-from .modules._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
+from .__information__ import __version__
+from .modules.consts._const import LST_COLOR_SYSTEM_CHOISES, DIC_DEFAULT_VALUES
+from .modules.consts._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
+from .modules.exceptions.exception import *
 from .modules.utils import extract_filename, extract_extension
-from .modules.rich_maker import SyntaxMaker, MarkdownMaker, TableMaker
+from .modules.help import print_help
+
+from .modules.rich_makers.syntax_maker import SyntaxMaker
+from .modules.rich_makers.markdown_maker import MarkdownMaker
+from .modules.rich_makers.table_maker import TableMaker
 
 
-def is_error_input(args):
+def check_input_error(args):
     """
     The function check input error
 
@@ -21,27 +27,18 @@ def is_error_input(args):
     ----------
     args : argparse.Namespace
         command line arguments
-
-    Returns
-    -------
-    : bool
-        whether input is error
     """
-    console = Console()
     # Is exists
+    if args.filepath is None:
+        return
     if not os.path.exists(args.filepath):
-        console.print(r'[bold red]\[richcat error][/bold red]: "[bold green]' + args.filepath + '[/bold green]": No such file or directory.')
-        return True
+        raise RichcatFileNotFoundError(args.filepath)
     # Is directory
     if os.path.isdir(args.filepath):
-        console.print(r'[bold red]\[richcat error][/bold red]: "[bold green]' + args.filepath + '[/bold green]" is a directory.')
-        return True
+        raise RichcatIsDirectoryError(args.filepath)
     # Is able to access
     if not os.access(args.filepath, os.R_OK):
-        console.print(r'[bold red]\[richcat error][/bold red]: "[bold green]' + args.filepath + '[/bold green]": Permission denied.')
-        return True
-
-    return False
+        raise RichcatPermissionError(args.filepath)
 
 
 def infer_filetype(filepath, filetype):
@@ -111,7 +108,7 @@ def interpret_style(style):
     return dic_style
 
 
-def print_rich(filepath, filetype, target_width, color_system, style):
+def print_rich(filetype, target_width, color_system, style, filepath=None, file_contents=None):
     """
     The function which make rich text
 
@@ -133,42 +130,64 @@ def print_rich(filepath, filetype, target_width, color_system, style):
 
     # Print
     if filetype == 'md':
-        maker = MarkdownMaker(target_width, color_system, dic_style, filepath=filepath)
+        maker = MarkdownMaker(target_width, color_system, dic_style, filepath=filepath, file_contents=file_contents)
         maker.print(dic_style['pager'])
 
     elif filetype == 'csv':
-        maker = TableMaker(target_width, color_system, dic_style, filepath=filepath)
+        maker = TableMaker(target_width, color_system, dic_style, filepath=filepath, file_contents=file_contents)
         maker.print(dic_style['pager'])
 
     else:
-        maker = SyntaxMaker(target_width, color_system, dic_style, filepath=filepath, filetype=filetype)
+        maker = SyntaxMaker(target_width, color_system, dic_style, filepath=filepath, filetype=filetype, file_contents=file_contents)
         maker.print(dic_style['pager'])
 
 
 def main():
     """ Args """
-    parser = argparse.ArgumentParser(description="RichCat", formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument('filepath', type=str, metavar='FilePath', help='file path')
+    parser = argparse.ArgumentParser(description="RichCat", formatter_class=argparse.RawTextHelpFormatter, add_help=False)
+    parser.add_argument('filepath', type=str, metavar='FilePath', nargs='?', default=None, help='file path')
+    parser.add_argument('-V', '--version', action='version', version='%%(prog)s %s' % __version__)
     parser.add_argument('-t', '--filetype', type=str, nargs='?', default=DIC_DEFAULT_VALUES['filetype'], metavar='FileType', help='filetype')
-    parser.add_argument('-w', '--width', type=str, nargs='?', default=str(DIC_DEFAULT_VALUES['width']), metavar='Width', help='width')
+    parser.add_argument('-w', '--width', type=float, nargs='?', default=str(DIC_DEFAULT_VALUES['width']), metavar='Width', help='width')
     parser.add_argument('-c', '--color-system', type=str, nargs='?', default=DIC_DEFAULT_VALUES['color_system'], choices=LST_COLOR_SYSTEM_CHOISES, metavar='ColorSystem',
                         help="""color system (default: '256')
-['standard', '256', 'truecolor', 'windows']""")
+    ['standard', '256', 'truecolor', 'windows']""")
     parser.add_argument('--style', type=str, nargs='?', default='', metavar='Style',
                         help="""Style setting
-[[no]header][,[no]pager]""")
+    [[no]header][,[no]pager]""")
+    parser.add_argument('-h', '--help', action='store_true')
     args = parser.parse_args()
 
-    """ Checking input error """
-    if is_error_input(args):
-        return
+    if not args.help:
+        if args.filepath is None:
+            if args.filetype==DIC_DEFAULT_VALUES['filetype']:
+                args.filetype = 'text'
+            args.file_contents = ''.join(sys.stdin.readlines())
+        else:
+            args.file_contents = None
+    """ Execute richcat """
+    richcat(args)
 
-    """ Infering FileType """
-    filepath, filetype = infer_filetype(args.filepath, args.filetype)
 
-    """ Print Rich """
-    print_rich(filepath, filetype, float(args.width), args.color_system, args.style)
+def richcat(args):
+    try:
+        """ help """
+        if args.help:
+            args.file_contents,args.filetype,args.filepath = print_help()
 
+        """ Checking input error """
+        check_input_error(args)
 
-if __name__ == '__main__':
-    main()
+        """ Infering FileType """
+        filepath, filetype = infer_filetype(args.filepath, args.filetype)
+
+        """ Print Rich """
+        try:
+            print_rich(filetype, float(args.width), args.color_system, args.style, filepath=filepath, file_contents=args.file_contents)
+        except BrokenPipeError:
+            raise RichcatBrokenPipeError()
+    except Exception as e:
+        if 'print_error' in dir(e):
+            e.print_error()
+        else:
+            raise e

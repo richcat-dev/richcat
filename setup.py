@@ -12,7 +12,7 @@ root_dir = path.abspath(path.dirname(__file__))
 def _requirements():
     return [name.rstrip() for name in open(path.join(root_dir, 'requirements.txt')).readlines()]
 
-with open(path.join(root_dir, main_directory, '__init__.py')) as f:
+with open(path.join(root_dir, main_directory, '__information__.py')) as f:
     init_text = f.read()
     version = re.search(r'__version__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
     license = re.search(r'__license__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)

@@ -1,7 +1,36 @@
-__copyright__    = 'Copyright (C) 2020 Yuta Yamamoto, Shotaro Kataoka'
-__version__      = '0.4.0'
-__license__      = 'MIT'
-__author__       = 'Yuta Yamamoto, Shotaro Kataoka'
-__author_email__ = 'automatuX78@gmail.com'
-__url__          = 'https://github.com/richcat-dev/richcat'
+from .richcat import richcat as exec_richcat
+from .modules.consts._const import DIC_DEFAULT_VALUES
+from .__information__ import __copyright__, __version__, __license__, __author__, __author_email__, __url__
+
+
+def richcat(filepath, **args):
+    """
+    The richcat function called from Python script
+
+    Parameters
+    ----------
+    filepath : str
+        filepath
+    **args : args
+        filetype : str
+        width : int or float
+        color_system : str
+        style : str
+
+    Returns
+        None
+    -------
+
+    """
+
+    class Args():
+        def __init__(self):
+            self.filepath = filepath
+            self.filetype = args['filetype'] if 'filetype' in args.keys() else DIC_DEFAULT_VALUES['filetype']
+            self.width = args['width'] if 'width' in args.keys() else DIC_DEFAULT_VALUES['width']
+            self.color_system = args['color_system'] if 'color_system' in args.keys() else DIC_DEFAULT_VALUES['color_system']
+            self.style = args['style'] if 'style' in args.keys() else ''
+    args = Args()
+
+    exec_richcat(args)
 
