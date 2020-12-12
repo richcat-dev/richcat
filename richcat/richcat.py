@@ -140,21 +140,26 @@ def print_rich(filepath, filetype, target_width, color_system, style):
 
 
 def main():
-    try:
-        """ Args """
-        parser = argparse.ArgumentParser(description="RichCat", formatter_class=argparse.RawTextHelpFormatter)
-        parser.add_argument('filepath', type=str, metavar='FilePath', help='file path')
-        parser.add_argument('-V', '--version', action='version', version='%%(prog)s %s' % __version__)
-        parser.add_argument('-t', '--filetype', type=str, nargs='?', default=DIC_DEFAULT_VALUES['filetype'], metavar='FileType', help='filetype')
-        parser.add_argument('-w', '--width', type=str, nargs='?', default=str(DIC_DEFAULT_VALUES['width']), metavar='Width', help='width')
-        parser.add_argument('-c', '--color-system', type=str, nargs='?', default=DIC_DEFAULT_VALUES['color_system'], choices=LST_COLOR_SYSTEM_CHOISES, metavar='ColorSystem',
-                            help="""color system (default: '256')
+    """ Args """
+    parser = argparse.ArgumentParser(description="RichCat", formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('filepath', type=str, metavar='FilePath', help='file path')
+    parser.add_argument('-V', '--version', action='version', version='%%(prog)s %s' % __version__)
+    parser.add_argument('-t', '--filetype', type=str, nargs='?', default=DIC_DEFAULT_VALUES['filetype'], metavar='FileType', help='filetype')
+    parser.add_argument('-w', '--width', type=str, nargs='?', default=str(DIC_DEFAULT_VALUES['width']), metavar='Width', help='width')
+    parser.add_argument('-c', '--color-system', type=str, nargs='?', default=DIC_DEFAULT_VALUES['color_system'], choices=LST_COLOR_SYSTEM_CHOISES, metavar='ColorSystem',
+                        help="""color system (default: '256')
     ['standard', '256', 'truecolor', 'windows']""")
-        parser.add_argument('--style', type=str, nargs='?', default='', metavar='Style',
-                            help="""Style setting
+    parser.add_argument('--style', type=str, nargs='?', default='', metavar='Style',
+                        help="""Style setting
     [[no]header][,[no]pager]""")
-        args = parser.parse_args()
+    args = parser.parse_args()
 
+    """ Execute richcat """
+    richcat(args)
+
+
+def richcat(args):
+    try:
         """ Checking input error """
         check_input_error(args)
 
