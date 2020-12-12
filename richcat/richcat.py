@@ -10,6 +10,7 @@ from rich.console import RenderGroup
 from .__information__ import __version__
 from .modules.consts._const import LST_COLOR_SYSTEM_CHOISES, DIC_DEFAULT_VALUES
 from .modules.consts._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
+from .modules.exceptions.exception import *
 from .modules.utils import extract_filename, extract_extension
 
 from .modules.rich_makers.syntax_maker import SyntaxMaker
@@ -17,7 +18,7 @@ from .modules.rich_makers.markdown_maker import MarkdownMaker
 from .modules.rich_makers.table_maker import TableMaker
 
 
-def is_error_input(args):
+def check_input_error(args):
     """
     The function check input error
 
@@ -25,27 +26,16 @@ def is_error_input(args):
     ----------
     args : argparse.Namespace
         command line arguments
-
-    Returns
-    -------
-    : bool
-        whether input is error
     """
-    console = Console()
     # Is exists
     if not os.path.exists(args.filepath):
-        console.print(r'[bold red]\[richcat error][/bold red]: "[bold green]' + args.filepath + '[/bold green]": No such file or directory.')
-        return True
+        raise RichcatFileNotFoundError(args.filepath)
     # Is directory
     if os.path.isdir(args.filepath):
-        console.print(r'[bold red]\[richcat error][/bold red]: "[bold green]' + args.filepath + '[/bold green]" is a directory.')
-        return True
+        raise RichcatIsDirectoryError(args.filepath)
     # Is able to access
     if not os.access(args.filepath, os.R_OK):
-        console.print(r'[bold red]\[richcat error][/bold red]: "[bold green]' + args.filepath + '[/bold green]": Permission denied.')
-        return True
-
-    return False
+        raise RichcatPermissionError(args.filepath)
 
 
 def infer_filetype(filepath, filetype):
@@ -158,22 +148,28 @@ def main():
     parser.add_argument('-w', '--width', type=str, nargs='?', default=str(DIC_DEFAULT_VALUES['width']), metavar='Width', help='width')
     parser.add_argument('-c', '--color-system', type=str, nargs='?', default=DIC_DEFAULT_VALUES['color_system'], choices=LST_COLOR_SYSTEM_CHOISES, metavar='ColorSystem',
                         help="""color system (default: '256')
-['standard', '256', 'truecolor', 'windows']""")
+    ['standard', '256', 'truecolor', 'windows']""")
     parser.add_argument('--style', type=str, nargs='?', default='', metavar='Style',
                         help="""Style setting
-[[no]header][,[no]pager]""")
+    [[no]header][,[no]pager]""")
     args = parser.parse_args()
 
-    """ Checking input error """
-    if is_error_input(args):
-        return
-
-    """ Infering FileType """
-    filepath, filetype = infer_filetype(args.filepath, args.filetype)
-
-    """ Print Rich """
-    print_rich(filepath, filetype, float(args.width), args.color_system, args.style)
+    """ Execute richcat """
+    richcat(args)
 
 
-if __name__ == '__main__':
-    main()
+def richcat(args):
+    try:
+        """ Checking input error """
+        check_input_error(args)
+
+        """ Infering FileType """
+        filepath, filetype = infer_filetype(args.filepath, args.filetype)
+
+        """ Print Rich """
+        print_rich(filepath, filetype, float(args.width), args.color_system, args.style)
+    except Exception as e:
+        if 'print_error' in dir(e):
+            e.print_error()
+        else:
+            raise e

@@ -1,4 +1,4 @@
-from .richcat import infer_filetype, print_rich, is_error_input
+from .richcat import richcat as exec_richcat
 from .modules.consts._const import DIC_DEFAULT_VALUES
 from .__information__ import __copyright__, __version__, __license__, __author__, __author_email__, __url__
 
@@ -32,13 +32,5 @@ def richcat(filepath, **args):
             self.style = args['style'] if 'style' in args.keys() else ''
     args = Args()
 
-    """ Checking input error """
-    if is_error_input(args):
-        return
-
-    """ Infering FileType """
-    filepath, filetype = infer_filetype(args.filepath, args.filetype)
-
-    """ Print Rich """
-    print_rich(filepath, filetype, float(args.width), args.color_system, args.style)
+    exec_richcat(args)
 

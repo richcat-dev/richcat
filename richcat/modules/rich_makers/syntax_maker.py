@@ -25,7 +25,6 @@ class SyntaxMaker(AbstractRichMaker):
             # Get text width
             text_width = calc_max_line_length(file_contents) + SYNTAX_MERGIN
             # Calculate terminal width
-            print(terminal_width)
             return text_width if text_width < terminal_width else terminal_width
         else:
             # -- Given target width directly pattern
