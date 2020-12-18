@@ -18,13 +18,14 @@ def create_args(filepath):
         "args, error", [
             (create_args("aaa"), exc.RichcatFileNotFoundError),
             (create_args("debug"), exc.RichcatIsDirectoryError),
-            (create_args("debug/test.js"), None)
+            (create_args("debug/permission.txt"), exc.RichcatPermissionError),
+            (create_args("debug/test.js"), None),
             ]
         )
 def test_check_input_error(args, error):
     try:
         richcat.check_input_error(args)
-        assert True
+        assert error is None
     except Exception as e:
         assert e.__class__ == error(args).__class__
 
