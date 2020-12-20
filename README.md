@@ -1,4 +1,5 @@
 ![Python package](https://github.com/richcat-dev/richcat/workflows/Python%20package/badge.svg)
+[![codecov](https://codecov.io/gh/richcat-dev/richcat/branch/main/graph/badge.svg?token=X3MXTFVWD5)](https://codecov.io/gh/richcat-dev/richcat)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4e61b411095d4d3292e2a3e169aa0f35)](https://app.codacy.com/gh/richcat-dev/richcat?utm_source=github.com&utm_medium=referral&utm_content=richcat-dev/richcat&utm_campaign=Badge_Grade)
 [![Downloads](https://pepy.tech/badge/richcat)](https://pepy.tech/project/richcat)
 # richcat
