@@ -10,6 +10,7 @@ on:
     - 'topic/**'
     - 'release/**'
     - 'hotfix/**'
+    - 'main'
   pull_request:
     branches: 
     - 'main'
