@@ -7,10 +7,6 @@ on:
   push:
     branches: 
     - 'develop'
-    - 'topic/**'
-    - 'release/**'
-    - 'hotfix/**'
-    - 'main'
   pull_request:
     branches: 
     - 'main'
