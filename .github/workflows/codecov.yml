@@ -24,9 +24,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest pytest-cov
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        chmod 000 debug/permission.txt
-        mkdir ./coverage
-        pytest --cov=./ --cov-report=xml
+        ./test-workflow.sh cov
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
