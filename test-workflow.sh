@@ -2,7 +2,7 @@ chmod 000 ./debug/permission.txt
 
 if [ "$1" = "cov" ]; then
   mkdir ./coverage
-  pytest --cov=./ --cov-report=xml
+  pytest --cov=./richcat --cov-report=xml ./tests
 else
   pytest
 fi
