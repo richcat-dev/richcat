@@ -1,4 +1,4 @@
-"""Exception error classes"""
+"""Exception error classes."""
 
 from abc import abstractmethod
 
@@ -6,6 +6,7 @@ from rich.console import Console
 
 
 class AbstractRichcatError(Exception):
+
     """Abstract richcat error class"""
 
     # Class variables
