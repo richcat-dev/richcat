@@ -16,7 +16,8 @@ from .modules.rich_makers.table_maker import TableMaker
 
 
 def check_input_error(args):
-    """The function check input error
+    """
+    The function check input error
 
     Parameters
     ----------
@@ -37,7 +38,8 @@ def check_input_error(args):
 
 
 def infer_filetype(filepath, filetype):
-    """The function which infer file type
+    """
+    The function which infer file type
 
     Parameters
     ----------
@@ -70,7 +72,8 @@ def infer_filetype(filepath, filetype):
 
 
 def interpret_style(style):
-    """The function interpret style
+    """
+    The function interpret style
 
     Parameters
     ----------
@@ -102,7 +105,8 @@ def interpret_style(style):
 
 
 def print_rich(filetype, target_width, color_system, style, filepath=None, file_contents=None):
-    """The function which make rich text
+    """
+    The function which make rich text
 
     Parameters
     ----------
