@@ -3,14 +3,10 @@ import sys
 import os
 import argparse
 
-from rich.console import Console
-from rich.panel import Panel
-from rich.console import RenderGroup
-
 from .__information__ import __version__
 from .modules.consts._const import LST_COLOR_SYSTEM_CHOISES, DIC_DEFAULT_VALUES
 from .modules.consts._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
-from .modules.exceptions.exception import *
+from .modules.exceptions.exception import RichcatFileNotFoundError, RichcatIsDirectoryError, RichcatPermissionError, RichcatBrokenPipeError
 from .modules.utils import extract_filename, extract_extension
 from .modules.help import print_help
 
@@ -20,8 +16,7 @@ from .modules.rich_makers.table_maker import TableMaker
 
 
 def check_input_error(args):
-    """
-    The function check input error
+    """The function check input error
 
     Parameters
     ----------
@@ -42,8 +37,7 @@ def check_input_error(args):
 
 
 def infer_filetype(filepath, filetype):
-    """
-    The function which infer file type
+    """The function which infer file type
 
     Parameters
     ----------
@@ -76,8 +70,7 @@ def infer_filetype(filepath, filetype):
 
 
 def interpret_style(style):
-    """
-    The function interpret style
+    """The function interpret style
 
     Parameters
     ----------
@@ -109,8 +102,7 @@ def interpret_style(style):
 
 
 def print_rich(filetype, target_width, color_system, style, filepath=None, file_contents=None):
-    """
-    The function which make rich text
+    """The function which make rich text
 
     Parameters
     ----------
@@ -143,7 +135,7 @@ def print_rich(filetype, target_width, color_system, style, filepath=None, file_
 
 
 def main():
-    """ Args """
+    # Args
     parser = argparse.ArgumentParser(description="RichCat", formatter_class=argparse.RawTextHelpFormatter, add_help=False)
     parser.add_argument('filepath', type=str, metavar='FilePath', nargs='?', default=None, help='file path')
     parser.add_argument('-V', '--version', action='version', version='%%(prog)s %s' % __version__)
@@ -165,23 +157,23 @@ def main():
             args.file_contents = ''.join(sys.stdin.readlines())
         else:
             args.file_contents = None
-    """ Execute richcat """
+    # Execute richcat
     richcat(args)
 
 
 def richcat(args):
     try:
-        """ help """
+        # help
         if args.help:
             args.file_contents,args.filetype,args.filepath = print_help()
 
-        """ Checking input error """
+        # Checking input error
         check_input_error(args)
 
-        """ Infering FileType """
+        # Infering FileType
         filepath, filetype = infer_filetype(args.filepath, args.filetype)
 
-        """ Print Rich """
+        # Print Rich
         try:
             print_rich(filetype, float(args.width), args.color_system, args.style, filepath=filepath, file_contents=args.file_contents)
         except BrokenPipeError:
