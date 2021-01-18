@@ -51,7 +51,7 @@ class RichcatFileNotFoundError(AbstractRichcatError):
 
 
 class RichcatIsDirectoryError(AbstractRichcatError):
-    """ 
+    """
     IsDirectory class
     Raise : If input failed because it is a directory.
     """
