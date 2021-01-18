@@ -1,6 +1,4 @@
-"""
-Exception error classes
-"""
+"""Exception error classes"""
 
 from abc import abstractmethod
 
@@ -8,16 +6,16 @@ from rich.console import Console
 
 
 class AbstractRichcatError(Exception):
-    """ Abstract richcat error class """
+    """Abstract richcat error class"""
 
-    """ Class variables """
+    # Class variables
     ERROR_HEAD = r'[bold red]\[richcat error][/bold red]:'
     console = Console()
 
     def exec_print(self, error_msg):
         """
         Method execute print process
-        
+
         Parameters
         ----------
         error_msg : str
@@ -27,12 +25,11 @@ class AbstractRichcatError(Exception):
 
     @abstractmethod
     def print_error(self):
-        """ Method print error (For child classes) """
         pass
 
 
 class RichcatFileNotFoundError(AbstractRichcatError):
-    """ 
+    """
     FileNotFoundError class
     Raise : If input failed because the path does not exist.
     """
@@ -74,7 +71,7 @@ class RichcatIsDirectoryError(AbstractRichcatError):
 
 
 class RichcatPermissionError(AbstractRichcatError):
-    """ 
+    """
     PermissionError class
     Raise : If input failed because of permission denied.
     """
@@ -95,7 +92,7 @@ class RichcatPermissionError(AbstractRichcatError):
 
 
 class RichcatTerminalWidthGetError(AbstractRichcatError):
-    """ 
+    """
     TerminalWidthGetError class
     Raise : If 'stty' failed.
     """
@@ -103,9 +100,10 @@ class RichcatTerminalWidthGetError(AbstractRichcatError):
         self.exec_print('Cloud not get terminal width. Please give terminal width by using "width" option.')
 
 class RichcatBrokenPipeError(AbstractRichcatError):
-    """ 
+    """
     RichcatBrokenPipeError class
     Raise : If pipe is broken.
     """
     def print_error(self):
         pass
+
