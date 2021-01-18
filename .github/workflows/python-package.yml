@@ -7,10 +7,6 @@ on:
   push:
     branches: 
     - 'develop'
-    - 'topic/**'
-    - 'release/**'
-    - 'hotfix/**'
-    - 'main'
   pull_request:
     branches: 
     - 'main'
@@ -22,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.6', '3.7', '3.8']
+        python-version: ['3.6', '3.7', '3.8', '3.9']
 
     steps:
     - uses: actions/checkout@v2
@@ -43,4 +39,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude=debug/**
     - name: Test with pytest
       run: |
-        pytest
+        ./workflow-test.sh

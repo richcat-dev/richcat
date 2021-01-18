@@ -1,3 +1,4 @@
+from . import richcat as rc
 from .richcat import richcat as exec_richcat
 from .modules.consts._const import DIC_DEFAULT_VALUES
 from .__information__ import __copyright__, __version__, __license__, __author__, __author_email__, __url__
