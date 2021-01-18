@@ -31,7 +31,7 @@ def richcat(filepath=None, file_contents=None, **args):
     -------
 
     """
-    
+
     if ((filepath is None) and (file_contents is None)):
         file_contents = 'Please input `filepath` or `file_contents`.'
         args['filetype'] = 'md'
