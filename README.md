@@ -23,18 +23,18 @@ By default, `richcat` pipes its own output to a pager. If you wouldn't rather pa
 
 ## Installation
 ```sh
-$ pip install richcat
+pip install richcat
 ```
 
 ## Usage
 Display a file contents on the terminal.
 ```sh
-$ richcat README.md
+richcat README.md
 ```
 
 Use `-t` option, you can choose highlight.
 ```sh
-$ richcat README.md -t text
+richcat README.md -t text
 ```
 
 ## Contributors
