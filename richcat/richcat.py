@@ -170,7 +170,6 @@ def main():
 
 
 def richcat(args):
-    print('codecov ci test')
     try:
         """ help """
         if args.help:
