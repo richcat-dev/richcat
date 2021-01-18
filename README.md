@@ -1,3 +1,5 @@
+![Python package](https://github.com/richcat-dev/richcat/workflows/Python%20package/badge.svg)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4e61b411095d4d3292e2a3e169aa0f35)](https://app.codacy.com/gh/richcat-dev/richcat?utm_source=github.com&utm_medium=referral&utm_content=richcat-dev/richcat&utm_campaign=Badge_Grade)
 [![Downloads](https://pepy.tech/badge/richcat)](https://pepy.tech/project/richcat)
 # richcat
 - `richcat` is a `cat` command decorated by [rich](https://github.com/willmcgugan/rich) which is Python library.
