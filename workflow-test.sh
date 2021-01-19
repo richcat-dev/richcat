@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ "$1" = "-h" -o "$1" = "--help" ]; then
   echo "  Args list"
   echo "    --help : show help."

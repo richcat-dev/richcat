@@ -14,28 +14,28 @@ def _requirements():
 
 with open(path.join(root_dir, main_directory, '__information__.py')) as f:
     init_text = f.read()
-    version = re.search(r'__version__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
-    license = re.search(r'__license__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
-    author = re.search(r'__author__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
-    author_email = re.search(r'__author_email__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
-    url = re.search(r'__url__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
+    _version = re.search(r'__version__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
+    _license = re.search(r'__license__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
+    _author = re.search(r'__author__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
+    _author_email = re.search(r'__author_email__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
+    _url = re.search(r'__url__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
 
-assert version
-assert license
-assert author
-assert author_email
-assert url
+assert _version
+assert _license
+assert _author
+assert _author_email
+assert _url
 
 setuptools.setup(
     name=package_name,
-    version=version,
-    author=author,
-    author_email=author_email,
+    version=_version,
+    author=_author,
+    author_email=_author_email,
     description="rich cat command working on Python",
     long_description=long_description,
     keywords='cat, rich',
     long_description_content_type="text/markdown",
-    url=url,
+    url=_url,
     packages=setuptools.find_packages(),
     install_requires=_requirements(),
     classifiers=[
@@ -47,7 +47,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         ],
-    license=license,
+    license=_license,
     entry_points = {
         'console_scripts': [
             'richcat = richcat.richcat:main',

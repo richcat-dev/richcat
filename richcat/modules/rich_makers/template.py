@@ -6,7 +6,7 @@ from abc import abstractmethod
 from rich.console import Console
 
 from ..consts._const import DIC_DEFAULT_VALUES
-from ..exceptions.exception import *
+from ..exceptions.exception import RichcatTerminalWidthGetError
 
 
 class AbstractRichMaker(ABC):
