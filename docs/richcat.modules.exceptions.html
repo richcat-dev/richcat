@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>richcat.modules.exceptions package &#8212; Richcat 0.4.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="richcat.modules.rich_makers package" href="richcat.modules.rich_makers.html" />
+    <link rel="prev" title="richcat.modules.consts package" href="richcat.modules.consts.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="richcat-modules-exceptions-package">
+<h1>richcat.modules.exceptions package<a class="headerlink" href="#richcat-modules-exceptions-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-richcat.modules.exceptions.exception">
+<span id="richcat-modules-exceptions-exception-module"></span><h2>richcat.modules.exceptions.exception module<a class="headerlink" href="#module-richcat.modules.exceptions.exception" title="Permalink to this headline">¶</a></h2>
+<p>Exception error classes.</p>
+<dl class="py exception">
+<dt id="richcat.modules.exceptions.exception.AbstractRichcatError">
+<em class="property">exception </em><code class="sig-prename descclassname">richcat.modules.exceptions.exception.</code><code class="sig-name descname">AbstractRichcatError</code><a class="headerlink" href="#richcat.modules.exceptions.exception.AbstractRichcatError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Abstract richcat error class</p>
+<dl class="py attribute">
+<dt id="richcat.modules.exceptions.exception.AbstractRichcatError.ERROR_HEAD">
+<code class="sig-name descname">ERROR_HEAD</code><em class="property"> = '[bold red]\\[richcat error][/bold red]:'</em><a class="headerlink" href="#richcat.modules.exceptions.exception.AbstractRichcatError.ERROR_HEAD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="richcat.modules.exceptions.exception.AbstractRichcatError.console">
+<code class="sig-name descname">console</code><em class="property"> = &lt;console width=80 ColorSystem.EIGHT_BIT&gt;</em><a class="headerlink" href="#richcat.modules.exceptions.exception.AbstractRichcatError.console" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="richcat.modules.exceptions.exception.AbstractRichcatError.exec_print">
+<code class="sig-name descname">exec_print</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">error_msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#richcat.modules.exceptions.exception.AbstractRichcatError.exec_print" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method execute print process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>error_msg</strong> (<em>str</em>) – error message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="richcat.modules.exceptions.exception.AbstractRichcatError.print_error">
+<em class="property">abstract </em><code class="sig-name descname">print_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#richcat.modules.exceptions.exception.AbstractRichcatError.print_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt id="richcat.modules.exceptions.exception.RichcatBrokenPipeError">
+<em class="property">exception </em><code class="sig-prename descclassname">richcat.modules.exceptions.exception.</code><code class="sig-name descname">RichcatBrokenPipeError</code><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatBrokenPipeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#richcat.modules.exceptions.exception.AbstractRichcatError" title="richcat.modules.exceptions.exception.AbstractRichcatError"><code class="xref py py-class docutils literal notranslate"><span class="pre">richcat.modules.exceptions.exception.AbstractRichcatError</span></code></a></p>
+<p>RichcatBrokenPipeError class
+Raise : If pipe is broken.</p>
+<dl class="py method">
+<dt id="richcat.modules.exceptions.exception.RichcatBrokenPipeError.print_error">
+<code class="sig-name descname">print_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatBrokenPipeError.print_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt id="richcat.modules.exceptions.exception.RichcatFileNotFoundError">
+<em class="property">exception </em><code class="sig-prename descclassname">richcat.modules.exceptions.exception.</code><code class="sig-name descname">RichcatFileNotFoundError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em><span class="sig-paren">)</span><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatFileNotFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#richcat.modules.exceptions.exception.AbstractRichcatError" title="richcat.modules.exceptions.exception.AbstractRichcatError"><code class="xref py py-class docutils literal notranslate"><span class="pre">richcat.modules.exceptions.exception.AbstractRichcatError</span></code></a></p>
+<p>FileNotFoundError class
+Raise : If input failed because the path does not exist.</p>
+<dl class="py method">
+<dt id="richcat.modules.exceptions.exception.RichcatFileNotFoundError.print_error">
+<code class="sig-name descname">print_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatFileNotFoundError.print_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt id="richcat.modules.exceptions.exception.RichcatIsDirectoryError">
+<em class="property">exception </em><code class="sig-prename descclassname">richcat.modules.exceptions.exception.</code><code class="sig-name descname">RichcatIsDirectoryError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em><span class="sig-paren">)</span><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatIsDirectoryError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#richcat.modules.exceptions.exception.AbstractRichcatError" title="richcat.modules.exceptions.exception.AbstractRichcatError"><code class="xref py py-class docutils literal notranslate"><span class="pre">richcat.modules.exceptions.exception.AbstractRichcatError</span></code></a></p>
+<p>IsDirectory class
+Raise : If input failed because it is a directory.</p>
+<dl class="py method">
+<dt id="richcat.modules.exceptions.exception.RichcatIsDirectoryError.print_error">
+<code class="sig-name descname">print_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatIsDirectoryError.print_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt id="richcat.modules.exceptions.exception.RichcatPermissionError">
+<em class="property">exception </em><code class="sig-prename descclassname">richcat.modules.exceptions.exception.</code><code class="sig-name descname">RichcatPermissionError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em><span class="sig-paren">)</span><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatPermissionError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#richcat.modules.exceptions.exception.AbstractRichcatError" title="richcat.modules.exceptions.exception.AbstractRichcatError"><code class="xref py py-class docutils literal notranslate"><span class="pre">richcat.modules.exceptions.exception.AbstractRichcatError</span></code></a></p>
+<p>PermissionError class
+Raise : If input failed because of permission denied.</p>
+<dl class="py method">
+<dt id="richcat.modules.exceptions.exception.RichcatPermissionError.print_error">
+<code class="sig-name descname">print_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatPermissionError.print_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt id="richcat.modules.exceptions.exception.RichcatTerminalWidthGetError">
+<em class="property">exception </em><code class="sig-prename descclassname">richcat.modules.exceptions.exception.</code><code class="sig-name descname">RichcatTerminalWidthGetError</code><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatTerminalWidthGetError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#richcat.modules.exceptions.exception.AbstractRichcatError" title="richcat.modules.exceptions.exception.AbstractRichcatError"><code class="xref py py-class docutils literal notranslate"><span class="pre">richcat.modules.exceptions.exception.AbstractRichcatError</span></code></a></p>
+<p>TerminalWidthGetError class
+Raise : If ‘stty’ failed.</p>
+<dl class="py method">
+<dt id="richcat.modules.exceptions.exception.RichcatTerminalWidthGetError.print_error">
+<code class="sig-name descname">print_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatTerminalWidthGetError.print_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-richcat.modules.exceptions">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-richcat.modules.exceptions" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Richcat</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="richcat.html">richcat package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="richcat.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="richcat.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="richcat.html#module-richcat.richcat">richcat.richcat module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="richcat.html#module-richcat">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="richcat.modules.html">richcat.modules package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="richcat.modules.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="richcat.modules.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="richcat.modules.html#module-richcat.modules.help">richcat.modules.help module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="richcat.modules.html#module-richcat.modules.utils">richcat.modules.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="richcat.modules.html#module-richcat.modules">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="richcat.html">richcat package</a><ul>
+  <li><a href="richcat.modules.html">richcat.modules package</a><ul>
+      <li>Previous: <a href="richcat.modules.consts.html" title="previous chapter">richcat.modules.consts package</a></li>
+      <li>Next: <a href="richcat.modules.rich_makers.html" title="next chapter">richcat.modules.rich_makers package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, @yamamoto-yuta, @ShotaroKataoka.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/richcat.modules.exceptions.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
