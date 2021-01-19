@@ -4,6 +4,14 @@ from .modules.consts._const import DIC_DEFAULT_VALUES
 from .__information__ import __copyright__, __version__, __license__, __author__, __author_email__, __url__
 
 
+__copyright__ = __copyright__
+__version__ = __version__
+__license__ = __license__
+__author__ = __author__
+__author_email__ = __author_email__
+__url__ = __url__
+rc = rc
+
 def richcat(filepath=None, file_contents=None, **args):
     """
     The richcat function called from Python script
@@ -23,7 +31,7 @@ def richcat(filepath=None, file_contents=None, **args):
     -------
 
     """
-    
+
     if ((filepath is None) and (file_contents is None)):
         file_contents = 'Please input `filepath` or `file_contents`.'
         args['filetype'] = 'md'
