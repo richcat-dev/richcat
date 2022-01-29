@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  richcat-dev:
+    build: .
+    image: richcat-dev
+    container_name: richcat-dev
+    ports:
+      - 8000:8000 # For Sphinx
+    volumes:
+      - .:/home
+    command: bash -c "pip install -e /home && /bin/bash"
+    tty: true
