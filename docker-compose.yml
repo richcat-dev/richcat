@@ -9,5 +9,5 @@ services:
       - 8000:8000 # For Sphinx
     volumes:
       - .:/home
-    command: bash -c "pip install -e /home && /bin/bash"
+    command: bash -c "pip install -e /home && sphinx-autobuild --host 0.0.0.0 -b html /home/doc/sphinx /home/docs"
     tty: true
