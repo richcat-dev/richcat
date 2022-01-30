@@ -1,5 +1,6 @@
 from ..__information__ import __version__
 
+
 def print_help():
     return f"# richcat {__version__}"+"""
 The `richcat` command supporting various types of files.

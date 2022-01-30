@@ -12,6 +12,7 @@ __author_email__ = __author_email__
 __url__ = __url__
 rc = rc
 
+
 def richcat(filepath=None, file_contents=None, **args):
     """
     The richcat function called from Python script
@@ -37,6 +38,7 @@ def richcat(filepath=None, file_contents=None, **args):
         args['filetype'] = 'md'
     if filepath is not None:
         file_contents = None
+
     class Args():
         def __init__(self):
             self.filepath = filepath
@@ -52,4 +54,3 @@ def richcat(filepath=None, file_contents=None, **args):
     args = Args()
 
     exec_richcat(args)
-
