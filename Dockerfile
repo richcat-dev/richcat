@@ -7,7 +7,9 @@ WORKDIR $HOME
 COPY .bashrc requirements.txt $HOME/
 
 # Installl commands
-RUN apt-get update && apt-get upgrade -y
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get install -y \
+    less
 
 # Install Python libraries
 RUN pip install --upgrade pip \
