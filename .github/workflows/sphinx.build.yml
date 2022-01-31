@@ -22,7 +22,8 @@ jobs:
           python -m pip install sphinx sphinx-autobuild furo
 
       - name: Build
-        run: | sphinx-autobuild -b html /home/doc/sphinx /home/docs
+        run: |
+          sphinx-autobuild -b html /home/doc/sphinx /home/docs
 
       - name: Push
           git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
