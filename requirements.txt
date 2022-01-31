@@ -1,1 +1,10 @@
+# Base libraries
 rich
+
+# For Sphinx
+sphinx
+sphinx-autobuild
+furo
+
+# Testing
+pytest
