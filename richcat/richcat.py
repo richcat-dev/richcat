@@ -156,7 +156,7 @@ def main():
 
     if not args.help:
         if args.filepath is None:
-            if args.filetype==DIC_DEFAULT_VALUES['filetype']:
+            if args.filetype == DIC_DEFAULT_VALUES['filetype']:
                 args.filetype = 'text'
             args.file_contents = ''.join(sys.stdin.readlines())
         else:
@@ -169,7 +169,7 @@ def richcat(args):
     try:
         # help
         if args.help:
-            args.file_contents,args.filetype,args.filepath = print_help()
+            args.file_contents, args.filetype, args.filepath = print_help()
 
         # Checking input error
         check_input_error(args)

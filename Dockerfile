@@ -4,7 +4,7 @@ FROM python:3.7
 # Environment
 ENV HOME /home
 WORKDIR $HOME
-COPY requirements.txt $HOME/
+COPY .bashrc requirements.txt $HOME/
 
 # Installl commands
 RUN apt-get update && apt-get upgrade -y
