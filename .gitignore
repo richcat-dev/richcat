@@ -75,7 +75,6 @@ sphinx/*
 !sphinx/conf.py
 !sphinx/make.bat
 !sphinx/Makefile
-docs/
 
 # PyBuilder
 target/
