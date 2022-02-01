@@ -12,7 +12,7 @@
 #
 import os
 import sys
-sys.path.insert(0, '../richcat')
+sys.path.insert(0, '../')
 
 
 # -- Project information -----------------------------------------------------
