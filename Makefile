@@ -14,4 +14,5 @@ autobuild:
 
 .PHONY: public
 public:
-	sphinx-build -b html "${SPHINXDIR}" "${DEPLOYDIR}"
+	sphinx-apidoc -f -H ${PROJECTNAME} -o "./sphinx" "./richcat"
+	sphinx-build -b html "./sphinx" "./docs"
