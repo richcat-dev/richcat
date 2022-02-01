@@ -44,9 +44,9 @@
 <li class="toctree-l3 current"><a class="reference internal" href="richcat.modules.html">richcat.modules package</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="richcat.modules.html#subpackages">Subpackages</a></li>
 <li class="toctree-l4"><a class="reference internal" href="richcat.modules.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="richcat.modules.html#richcat-modules-help-module">richcat.modules.help module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="richcat.modules.html#richcat-modules-utils-module">richcat.modules.utils module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="richcat.modules.html#module-contents">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="richcat.modules.html#module-richcat.modules.help">richcat.modules.help module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="richcat.modules.html#module-richcat.modules.utils">richcat.modules.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="richcat.modules.html#module-richcat.modules">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -89,11 +89,110 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </section>
-<section id="richcat-modules-exceptions-exception-module">
-<h2>richcat.modules.exceptions.exception module<a class="headerlink" href="#richcat-modules-exceptions-exception-module" title="Permalink to this headline"></a></h2>
+<section id="module-richcat.modules.exceptions.exception">
+<span id="richcat-modules-exceptions-exception-module"></span><h2>richcat.modules.exceptions.exception module<a class="headerlink" href="#module-richcat.modules.exceptions.exception" title="Permalink to this headline"></a></h2>
+<p>Exception error classes.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.AbstractRichcatError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">richcat.modules.exceptions.exception.</span></span><span class="sig-name descname"><span class="pre">AbstractRichcatError</span></span><a class="reference internal" href="_modules/richcat/modules/exceptions/exception.html#AbstractRichcatError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#richcat.modules.exceptions.exception.AbstractRichcatError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Abstract richcat error class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.AbstractRichcatError.ERROR_HEAD">
+<span class="sig-name descname"><span class="pre">ERROR_HEAD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'[bold</span> <span class="pre">red]\\[richcat</span> <span class="pre">error][/bold</span> <span class="pre">red]:'</span></em><a class="headerlink" href="#richcat.modules.exceptions.exception.AbstractRichcatError.ERROR_HEAD" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.AbstractRichcatError.console">
+<span class="sig-name descname"><span class="pre">console</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;console</span> <span class="pre">width=80</span> <span class="pre">None&gt;</span></em><a class="headerlink" href="#richcat.modules.exceptions.exception.AbstractRichcatError.console" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.AbstractRichcatError.exec_print">
+<span class="sig-name descname"><span class="pre">exec_print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/richcat/modules/exceptions/exception.html#AbstractRichcatError.exec_print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#richcat.modules.exceptions.exception.AbstractRichcatError.exec_print" title="Permalink to this definition"></a></dt>
+<dd><p>Method execute print process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>error_msg</strong> (<em>str</em>) – error message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.AbstractRichcatError.print_error">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">print_error</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/richcat/modules/exceptions/exception.html#AbstractRichcatError.print_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#richcat.modules.exceptions.exception.AbstractRichcatError.print_error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.RichcatBrokenPipeError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">richcat.modules.exceptions.exception.</span></span><span class="sig-name descname"><span class="pre">RichcatBrokenPipeError</span></span><a class="reference internal" href="_modules/richcat/modules/exceptions/exception.html#RichcatBrokenPipeError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatBrokenPipeError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#richcat.modules.exceptions.exception.AbstractRichcatError" title="richcat.modules.exceptions.exception.AbstractRichcatError"><code class="xref py py-class docutils literal notranslate"><span class="pre">richcat.modules.exceptions.exception.AbstractRichcatError</span></code></a></p>
+<p>RichcatBrokenPipeError class
+Raise : If pipe is broken.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.RichcatBrokenPipeError.print_error">
+<span class="sig-name descname"><span class="pre">print_error</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/richcat/modules/exceptions/exception.html#RichcatBrokenPipeError.print_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatBrokenPipeError.print_error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.RichcatFileNotFoundError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">richcat.modules.exceptions.exception.</span></span><span class="sig-name descname"><span class="pre">RichcatFileNotFoundError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/richcat/modules/exceptions/exception.html#RichcatFileNotFoundError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatFileNotFoundError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#richcat.modules.exceptions.exception.AbstractRichcatError" title="richcat.modules.exceptions.exception.AbstractRichcatError"><code class="xref py py-class docutils literal notranslate"><span class="pre">richcat.modules.exceptions.exception.AbstractRichcatError</span></code></a></p>
+<p>FileNotFoundError class
+Raise : If input failed because the path does not exist.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.RichcatFileNotFoundError.print_error">
+<span class="sig-name descname"><span class="pre">print_error</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/richcat/modules/exceptions/exception.html#RichcatFileNotFoundError.print_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatFileNotFoundError.print_error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.RichcatIsDirectoryError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">richcat.modules.exceptions.exception.</span></span><span class="sig-name descname"><span class="pre">RichcatIsDirectoryError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/richcat/modules/exceptions/exception.html#RichcatIsDirectoryError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatIsDirectoryError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#richcat.modules.exceptions.exception.AbstractRichcatError" title="richcat.modules.exceptions.exception.AbstractRichcatError"><code class="xref py py-class docutils literal notranslate"><span class="pre">richcat.modules.exceptions.exception.AbstractRichcatError</span></code></a></p>
+<p>IsDirectory class
+Raise : If input failed because it is a directory.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.RichcatIsDirectoryError.print_error">
+<span class="sig-name descname"><span class="pre">print_error</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/richcat/modules/exceptions/exception.html#RichcatIsDirectoryError.print_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatIsDirectoryError.print_error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.RichcatPermissionError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">richcat.modules.exceptions.exception.</span></span><span class="sig-name descname"><span class="pre">RichcatPermissionError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/richcat/modules/exceptions/exception.html#RichcatPermissionError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatPermissionError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#richcat.modules.exceptions.exception.AbstractRichcatError" title="richcat.modules.exceptions.exception.AbstractRichcatError"><code class="xref py py-class docutils literal notranslate"><span class="pre">richcat.modules.exceptions.exception.AbstractRichcatError</span></code></a></p>
+<p>PermissionError class
+Raise : If input failed because of permission denied.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.RichcatPermissionError.print_error">
+<span class="sig-name descname"><span class="pre">print_error</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/richcat/modules/exceptions/exception.html#RichcatPermissionError.print_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatPermissionError.print_error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.RichcatTerminalWidthGetError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">richcat.modules.exceptions.exception.</span></span><span class="sig-name descname"><span class="pre">RichcatTerminalWidthGetError</span></span><a class="reference internal" href="_modules/richcat/modules/exceptions/exception.html#RichcatTerminalWidthGetError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatTerminalWidthGetError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#richcat.modules.exceptions.exception.AbstractRichcatError" title="richcat.modules.exceptions.exception.AbstractRichcatError"><code class="xref py py-class docutils literal notranslate"><span class="pre">richcat.modules.exceptions.exception.AbstractRichcatError</span></code></a></p>
+<p>TerminalWidthGetError class
+Raise : If ‘stty’ failed.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="richcat.modules.exceptions.exception.RichcatTerminalWidthGetError.print_error">
+<span class="sig-name descname"><span class="pre">print_error</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/richcat/modules/exceptions/exception.html#RichcatTerminalWidthGetError.print_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#richcat.modules.exceptions.exception.RichcatTerminalWidthGetError.print_error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline"></a></h2>
+<section id="module-richcat.modules.exceptions">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-richcat.modules.exceptions" title="Permalink to this headline"></a></h2>
 </section>
 </section>
 

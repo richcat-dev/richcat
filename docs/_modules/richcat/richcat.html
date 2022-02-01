@@ -54,6 +54,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../index.html">Module code</a> &raquo;</li>
+          <li><a href="../richcat.html">richcat</a> &raquo;</li>
       <li>richcat.richcat</li>
       <li class="wy-breadcrumbs-aside">
       </li>
@@ -64,62 +65,195 @@
            <div itemprop="articleBody">
              
   <h1>Source code for richcat.richcat</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">richcat</span> <span class="k">as</span> <span class="n">rc</span>
-<span class="kn">from</span> <span class="nn">.richcat</span> <span class="kn">import</span> <span class="n">richcat</span> <span class="k">as</span> <span class="n">exec_richcat</span>
-<span class="kn">from</span> <span class="nn">.modules.consts._const</span> <span class="kn">import</span> <span class="n">DIC_DEFAULT_VALUES</span>
-<span class="kn">from</span> <span class="nn">.__information__</span> <span class="kn">import</span> <span class="n">__copyright__</span><span class="p">,</span> <span class="n">__version__</span><span class="p">,</span> <span class="n">__license__</span><span class="p">,</span> <span class="n">__author__</span><span class="p">,</span> <span class="n">__author_email__</span><span class="p">,</span> <span class="n">__url__</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="kn">from</span> <span class="nn">.__information__</span> <span class="kn">import</span> <span class="n">__version__</span>
+<span class="kn">from</span> <span class="nn">.modules.consts._const</span> <span class="kn">import</span> <span class="n">LST_COLOR_SYSTEM_CHOISES</span><span class="p">,</span> <span class="n">DIC_DEFAULT_VALUES</span>
+<span class="kn">from</span> <span class="nn">.modules.consts._ext2alias_dic_generator</span> <span class="kn">import</span> <span class="n">DIC_LEXER_WC</span><span class="p">,</span> <span class="n">DIC_LEXER_CONST</span>
+<span class="kn">from</span> <span class="nn">.modules.exceptions.exception</span> <span class="kn">import</span> <span class="n">RichcatFileNotFoundError</span><span class="p">,</span> <span class="n">RichcatIsDirectoryError</span><span class="p">,</span> <span class="n">RichcatPermissionError</span><span class="p">,</span> <span class="n">RichcatBrokenPipeError</span>
+<span class="kn">from</span> <span class="nn">.modules.utils</span> <span class="kn">import</span> <span class="n">extract_filename</span><span class="p">,</span> <span class="n">extract_extension</span>
+<span class="kn">from</span> <span class="nn">.modules.help</span> <span class="kn">import</span> <span class="n">print_help</span>
+
+<span class="kn">from</span> <span class="nn">.modules.rich_makers.syntax_maker</span> <span class="kn">import</span> <span class="n">SyntaxMaker</span>
+<span class="kn">from</span> <span class="nn">.modules.rich_makers.markdown_maker</span> <span class="kn">import</span> <span class="n">MarkdownMaker</span>
+<span class="kn">from</span> <span class="nn">.modules.rich_makers.table_maker</span> <span class="kn">import</span> <span class="n">TableMaker</span>
 
 
-<span class="n">__copyright__</span> <span class="o">=</span> <span class="n">__copyright__</span>
-<span class="n">__version__</span> <span class="o">=</span> <span class="n">__version__</span>
-<span class="n">__license__</span> <span class="o">=</span> <span class="n">__license__</span>
-<span class="n">__author__</span> <span class="o">=</span> <span class="n">__author__</span>
-<span class="n">__author_email__</span> <span class="o">=</span> <span class="n">__author_email__</span>
-<span class="n">__url__</span> <span class="o">=</span> <span class="n">__url__</span>
-<span class="n">rc</span> <span class="o">=</span> <span class="n">rc</span>
-
-
-<div class="viewcode-block" id="richcat"><a class="viewcode-back" href="../../richcat.html#richcat.richcat.richcat">[docs]</a><span class="k">def</span> <span class="nf">richcat</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_contents</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="check_input_error"><a class="viewcode-back" href="../../richcat.html#richcat.richcat.check_input_error">[docs]</a><span class="k">def</span> <span class="nf">check_input_error</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The richcat function called from Python script</span>
+<span class="sd">    The function check input error</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : argparse.Namespace</span>
+<span class="sd">        command line arguments</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Is exists</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">filepath</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">filepath</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">RichcatFileNotFoundError</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="c1"># Is directory</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">filepath</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">RichcatIsDirectoryError</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="c1"># Is able to access</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">filepath</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">R_OK</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">RichcatPermissionError</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="infer_filetype"><a class="viewcode-back" href="../../richcat.html#richcat.richcat.infer_filetype">[docs]</a><span class="k">def</span> <span class="nf">infer_filetype</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">filetype</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The function which infer file type</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filepath : str</span>
+<span class="sd">        command line argument of filepath</span>
+<span class="sd">    filetype : str</span>
+<span class="sd">        command line argument of filetype</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    filepath : str</span>
+<span class="sd">        filepath</span>
+<span class="sd">    filetype : str</span>
+<span class="sd">        filetype</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="n">DIC_DEFAULT_VALUES</span><span class="p">[</span><span class="s1">&#39;filetype&#39;</span><span class="p">]:</span>
+        <span class="c1"># Extract filename from filepath</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">extract_filename</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="n">filetype</span> <span class="o">=</span> <span class="n">extract_extension</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="c1"># Convert extension to alias</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">DIC_LEXER_CONST</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">DIC_LEXER_CONST</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">filetype</span> <span class="ow">in</span> <span class="n">DIC_LEXER_WC</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">DIC_LEXER_WC</span><span class="p">[</span><span class="n">filetype</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filetype</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filetype</span></div>
+
+
+<div class="viewcode-block" id="interpret_style"><a class="viewcode-back" href="../../richcat.html#richcat.richcat.interpret_style">[docs]</a><span class="k">def</span> <span class="nf">interpret_style</span><span class="p">(</span><span class="n">style</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The function interpret style</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    style : str</span>
+<span class="sd">        command line argument of style</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dic_style : dict</span>
+<span class="sd">        style dict</span>
+<span class="sd">        - structure:</span>
+<span class="sd">            - &#39;header&#39;: True/False</span>
+<span class="sd">            - &#39;pager&#39;: True/False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Style dict</span>
+    <span class="n">dic_style</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;header&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;pager&#39;</span><span class="p">:</span> <span class="kc">True</span>
+    <span class="p">}</span>
+    <span class="c1"># Split command line args of style</span>
+    <span class="n">lst_style</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="c1"># Interpret style</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dic_style</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">lst_style</span><span class="p">:</span>
+            <span class="n">dic_style</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="s1">&#39;no&#39;</span> <span class="o">+</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">lst_style</span><span class="p">:</span>
+            <span class="n">dic_style</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">dic_style</span></div>
+
+
+<div class="viewcode-block" id="print_rich"><a class="viewcode-back" href="../../richcat.html#richcat.richcat.print_rich">[docs]</a><span class="k">def</span> <span class="nf">print_rich</span><span class="p">(</span><span class="n">filetype</span><span class="p">,</span> <span class="n">target_width</span><span class="p">,</span> <span class="n">color_system</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_contents</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The function which make rich text</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    filepath : str</span>
 <span class="sd">        filepath</span>
-<span class="sd">    **args : args</span>
-<span class="sd">        filetype : str</span>
-<span class="sd">        width : int or float</span>
-<span class="sd">        color_system : str</span>
-<span class="sd">        style : str</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">        None</span>
-<span class="sd">    -------</span>
-
+<span class="sd">    filetype : str</span>
+<span class="sd">        filetype</span>
+<span class="sd">    target_width : float</span>
+<span class="sd">        target_width</span>
+<span class="sd">    color_system : str</span>
+<span class="sd">        color system</span>
+<span class="sd">    style : str</span>
+<span class="sd">        command line argument of style</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Interpret style</span>
+    <span class="n">dic_style</span> <span class="o">=</span> <span class="n">interpret_style</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="p">((</span><span class="n">filepath</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">file_contents</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)):</span>
-        <span class="n">file_contents</span> <span class="o">=</span> <span class="s1">&#39;Please input `filepath` or `file_contents`.&#39;</span>
-        <span class="n">args</span><span class="p">[</span><span class="s1">&#39;filetype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;md&#39;</span>
-    <span class="k">if</span> <span class="n">filepath</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">file_contents</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># Print</span>
+    <span class="k">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;md&#39;</span><span class="p">:</span>
+        <span class="n">maker</span> <span class="o">=</span> <span class="n">MarkdownMaker</span><span class="p">(</span><span class="n">target_width</span><span class="p">,</span> <span class="n">color_system</span><span class="p">,</span> <span class="n">dic_style</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="n">filepath</span><span class="p">,</span> <span class="n">file_contents</span><span class="o">=</span><span class="n">file_contents</span><span class="p">)</span>
+        <span class="n">maker</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">dic_style</span><span class="p">[</span><span class="s1">&#39;pager&#39;</span><span class="p">])</span>
 
-    <span class="k">class</span> <span class="nc">Args</span><span class="p">():</span>
-        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">file_contents</span> <span class="o">=</span> <span class="n">file_contents</span>
-            <span class="k">if</span> <span class="n">file_contents</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;filetype&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;filetype&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;text&#39;</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;filetype&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;filetype&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="n">DIC_DEFAULT_VALUES</span><span class="p">[</span><span class="s1">&#39;filetype&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;width&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="n">DIC_DEFAULT_VALUES</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">color_system</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;color_system&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;color_system&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="n">DIC_DEFAULT_VALUES</span><span class="p">[</span><span class="s1">&#39;color_system&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;style&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;style&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">help</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;help&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;help&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="kc">False</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">Args</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
+        <span class="n">maker</span> <span class="o">=</span> <span class="n">TableMaker</span><span class="p">(</span><span class="n">target_width</span><span class="p">,</span> <span class="n">color_system</span><span class="p">,</span> <span class="n">dic_style</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="n">filepath</span><span class="p">,</span> <span class="n">file_contents</span><span class="o">=</span><span class="n">file_contents</span><span class="p">)</span>
+        <span class="n">maker</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">dic_style</span><span class="p">[</span><span class="s1">&#39;pager&#39;</span><span class="p">])</span>
 
-    <span class="n">exec_richcat</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">maker</span> <span class="o">=</span> <span class="n">SyntaxMaker</span><span class="p">(</span><span class="n">target_width</span><span class="p">,</span> <span class="n">color_system</span><span class="p">,</span> <span class="n">dic_style</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="n">filepath</span><span class="p">,</span> <span class="n">filetype</span><span class="o">=</span><span class="n">filetype</span><span class="p">,</span> <span class="n">file_contents</span><span class="o">=</span><span class="n">file_contents</span><span class="p">)</span>
+        <span class="n">maker</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">dic_style</span><span class="p">[</span><span class="s1">&#39;pager&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../richcat.html#richcat.richcat.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Args</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;RichCat&quot;</span><span class="p">,</span> <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawTextHelpFormatter</span><span class="p">,</span> <span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;filepath&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;FilePath&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;file path&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-V&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%%</span><span class="s1">(prog)s </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">__version__</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="s1">&#39;--filetype&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">DIC_DEFAULT_VALUES</span><span class="p">[</span><span class="s1">&#39;filetype&#39;</span><span class="p">],</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;FileType&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;filetype&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-w&#39;</span><span class="p">,</span> <span class="s1">&#39;--width&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">DIC_DEFAULT_VALUES</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]),</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;Width&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;--color-system&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">DIC_DEFAULT_VALUES</span><span class="p">[</span><span class="s1">&#39;color_system&#39;</span><span class="p">],</span> <span class="n">choices</span><span class="o">=</span><span class="n">LST_COLOR_SYSTEM_CHOISES</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;ColorSystem&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;color system (default: &#39;256&#39;)</span>
+<span class="s2">    [&#39;standard&#39;, &#39;256&#39;, &#39;truecolor&#39;, &#39;windows&#39;]&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--style&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;Style&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;Style setting</span>
+<span class="s2">    [[no]header][,[no]pager]&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-h&#39;</span><span class="p">,</span> <span class="s1">&#39;--help&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">help</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">filepath</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">filetype</span> <span class="o">==</span> <span class="n">DIC_DEFAULT_VALUES</span><span class="p">[</span><span class="s1">&#39;filetype&#39;</span><span class="p">]:</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">filetype</span> <span class="o">=</span> <span class="s1">&#39;text&#39;</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">file_contents</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">file_contents</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># Execute richcat</span>
+    <span class="n">richcat</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="richcat"><a class="viewcode-back" href="../../richcat.html#richcat.richcat.richcat">[docs]</a><span class="k">def</span> <span class="nf">richcat</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># help</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">help</span><span class="p">:</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">file_contents</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">filetype</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">print_help</span><span class="p">()</span>
+
+        <span class="c1"># Checking input error</span>
+        <span class="n">check_input_error</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+        <span class="c1"># Infering FileType</span>
+        <span class="n">filepath</span><span class="p">,</span> <span class="n">filetype</span> <span class="o">=</span> <span class="n">infer_filetype</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">filepath</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">filetype</span><span class="p">)</span>
+
+        <span class="c1"># Print Rich</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">print_rich</span><span class="p">(</span><span class="n">filetype</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">width</span><span class="p">),</span> <span class="n">args</span><span class="o">.</span><span class="n">color_system</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">style</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="n">filepath</span><span class="p">,</span> <span class="n">file_contents</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">file_contents</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">BrokenPipeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">RichcatBrokenPipeError</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;print_error&#39;</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+            <span class="n">e</span><span class="o">.</span><span class="n">print_error</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">e</span></div>
 </pre></div>
 
            </div>
