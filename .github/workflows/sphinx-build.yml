@@ -23,7 +23,8 @@ jobs:
 
       - name: Build
         run: |
-          sphinx-build -b html /home/doc/sphinx /home/docs
+          make apidoc
+          make public
 
       - name: Push
         run: |
