@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r /home/yamamoto/develop/richcat/.github/workflows/requirements-sphinx-build.txt
+          python -m pip install -r /home/.github/workflows/requirements-sphinx-build.txt
 
       - name: Build
         run: |
