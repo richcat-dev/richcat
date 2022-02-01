@@ -11,26 +11,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.7
-
-      - name: Install dependencies
+      - name: Debug
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r ./.github/workflows/requirements-sphinx-build.txt
+          pwd
+          ls -al
 
-      - name: Build
-        run: |
-          make apidoc
-          make public
+      # - name: Set up Python
+      #   uses: actions/setup-python@v2
+      #   with:
+      #     python-version: 3.7
 
-      - name: Push
-        run: |
-          git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
-          git config --global user.name "${GITHUB_ACTOR}"
-          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git add docs/
-          git commit -m "Build site"
-          git push origin HEAD:${GITHUB_REF}
+      # - name: Install dependencies
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     python -m pip install -r /home/.github/workflows/requirements-sphinx-build.txt
+
+      # - name: Build
+      #   run: |
+      #     make apidoc
+      #     make public
+
+      # - name: Push
+      #   run: |
+      #     git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
+      #     git config --global user.name "${GITHUB_ACTOR}"
+      #     git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      #     git add docs/
+      #     git commit -m "Build site"
+      #     git push origin HEAD:${GITHUB_REF}
