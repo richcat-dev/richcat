@@ -23,7 +23,6 @@ jobs:
 
       - name: Build
         run: |
-          make apidoc
           make public
 
       - name: Push
