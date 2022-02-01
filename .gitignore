@@ -69,6 +69,12 @@ instance/
 .scrapy
 
 # Sphinx documentation
+sphinx/*
+!sphinx/_static/
+!sphinx/_templates/
+!sphinx/conf.py
+!sphinx/make.bat
+!sphinx/Makefile
 docs/
 
 # PyBuilder
