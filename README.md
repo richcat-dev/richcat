@@ -19,7 +19,7 @@
 ![image](https://user-images.githubusercontent.com/55144709/152116330-e9a391a0-0491-4b3b-82f9-7a56e789a273.png)
 
 ### Automatic paging
-By default, `richcat` pipes its own output to a pager. If you wouldn't rather pager, use `--disable-pager` option.
+By default, `richcat` pipes its own output to a pager. If you wouldn't rather pager, use `--style=nopager` option.
 
 ## Installation
 ```sh
