@@ -8,15 +8,15 @@
 ## Features
 
 ### Syntax hilighting
-![](doc/img/index-html.jpg)
+![image](https://user-images.githubusercontent.com/55144709/152114834-9172b501-269a-4044-9889-94c92346c5ff.png)
 
 ### Support viewer
 
 #### Markdown
-![](doc/img/sample-md.jpg)
+![image](https://user-images.githubusercontent.com/55144709/152116094-d20ea35a-5dbd-441c-b668-2a3f408caaaf.png)
 
 #### CSV
-![](doc/img/table-csv.jpg)
+![image](https://user-images.githubusercontent.com/55144709/152116330-e9a391a0-0491-4b3b-82f9-7a56e789a273.png)
 
 ### Automatic paging
 By default, `richcat` pipes its own output to a pager. If you wouldn't rather pager, use `--disable-pager` option.
