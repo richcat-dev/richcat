@@ -31,7 +31,7 @@ By default, `richcat` pipes its own output to a pager. If you wouldn't rather pa
 
 ## Installation
 
-```sh
+```
 pip install richcat
 ```
 
@@ -41,7 +41,7 @@ Display a file contents on the terminal.
 
 example:
 
-```sh
+```
 richcat table.csv
 ```
 
@@ -49,7 +49,7 @@ Use `-t` option, you can choose highlight.
 
 example:
 
-```sh
+```
 richcat table.csv -t text
 ```
 
