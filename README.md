@@ -21,6 +21,7 @@
 ### Automatic paging
 By default, `richcat` pipes its own output to a pager. If you wouldn't rather pager, use `--style=nopager` option.
 
+![image](https://user-images.githubusercontent.com/55144709/152116597-fdaca73f-9c0d-4b56-894c-e384dba84d96.png)
 ## Installation
 ```sh
 pip install richcat
