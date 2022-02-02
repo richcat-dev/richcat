@@ -29,13 +29,15 @@ pip install richcat
 
 ## Usage
 Display a file contents on the terminal.
+example:
 ```sh
-richcat README.md
+richcat table.csv
 ```
 
 Use `-t` option, you can choose highlight.
+example:
 ```sh
-richcat README.md -t text
+richcat table.csv -t text
 ```
 
 ## Contributors
