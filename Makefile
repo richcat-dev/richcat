@@ -12,7 +12,7 @@ apidoc:
 autobuild:
 	sphinx-autobuild --host 0.0.0.0 -b html "${SPHINXDIR}" "${DEPLOYDIR}"
 
-.PHONY: deploy
-deploy:
+.PHONY: publicbuild
+publicbuild:
 	sphinx-apidoc -f -H ${PROJECTNAME} -o "${SPHINXDIR}" "${PROJECTDIR}"
 	sphinx-build -b html "${SPHINXDIR}" "${DEPLOYDIR}"
