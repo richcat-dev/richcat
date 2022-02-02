@@ -69,7 +69,13 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+sphinx/*
+!sphinx/_static/
+!sphinx/_templates/
+!sphinx/index.rst
+!sphinx/conf.py
+!sphinx/make.bat
+!sphinx/Makefile
 
 # PyBuilder
 target/
@@ -130,3 +136,5 @@ dmypy.json
 
 # VSCode Remote Container
 .vscode/
+
+.bash_history
