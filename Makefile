@@ -1,7 +1,7 @@
-SPHINXDIR = ${HOME}/sphinx
+SPHINXDIR = sphinx
 PROJECTNAME = richcat
-PROJECTDIR = ${HOME}/${PROJECTNAME}
-DEPLOYDIR = ${HOME}/docs
+PROJECTDIR = ${PROJECTNAME}
+DEPLOYDIR = ${SPHINXDIR}/_build
 
 
 .PHONY: apidoc
@@ -10,9 +10,9 @@ apidoc:
 
 .PHONY: autobuild
 autobuild:
-	sphinx-autobuild --host 0.0.0.0 -b html "${SPHINXDIR}" "${SPHINXDIR}"/_build
+	sphinx-autobuild --host 0.0.0.0 -b html "${SPHINXDIR}" "${DEPLOYDIR}"
 
-.PHONY: public
-public:
-	sphinx-apidoc -f -H ${PROJECTNAME} -o "./sphinx" "./richcat"
-	sphinx-build -b html "./sphinx" "./docs"
+.PHONY: deploy
+deploy:
+	sphinx-apidoc -f -H ${PROJECTNAME} -o "${SPHINXDIR}" "${PROJECTDIR}"
+	sphinx-build -b html "${SPHINXDIR}" "${DEPLOYDIR}"
