@@ -40,6 +40,18 @@ example:
 richcat table.csv -t text
 ```
 
+Use `--style=header` option if you use the header in a CSV file.
+
+example:
+
+```sh
+richcat table.csv --style=header
+```
+
+| `--style=noheader` (default)                                                                                    | `--style=header`                                                                                                |
+| --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| ![image](https://user-images.githubusercontent.com/55144709/152151519-a95c262d-9074-47f2-ada8-b5dae6a4866c.png) | ![image](https://user-images.githubusercontent.com/55144709/152151220-9e7e8829-109e-42ed-ad78-96f145fbf222.png) |
+
 ## Contributors
 -   [@yamamoto-yuta](https://github.com/yamamoto-yuta) (Maintainer, **main contributor!**)
 -   [@ShotaroKataoka](https://github.com/ShotaroKataoka) (Maintainer)
