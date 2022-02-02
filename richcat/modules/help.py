@@ -8,7 +8,6 @@ The `richcat` command supporting various types of files.
 ## USAGE
 ```js
 richcat <OPTIONS> <FILE>
-<COMMANDS> | richcat -w <INT> <OPTIONS>
 ```
 
 ## ARGS
