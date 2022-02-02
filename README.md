@@ -65,6 +65,40 @@ richcat table.csv --style=header
 | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | ![image](https://user-images.githubusercontent.com/55144709/152151519-a95c262d-9074-47f2-ada8-b5dae6a4866c.png) | ![image](https://user-images.githubusercontent.com/55144709/152151220-9e7e8829-109e-42ed-ad78-96f145fbf222.png) |
 
+## Development
+
+If you want to develop richcat, please follow the steps below.
+
+1. Build the development environment.
+
+```
+$ git clone git@github.com:richcat-dev/richcat.git
+$ docker-compose build
+```
+
+2. Start the development environment.
+
+```
+$ docker-compose up
+```
+
+3. Go inside the launched Docker container to develop.
+
+```
+$ docker exec -it <CONTAINER_ID>
+```
+
+You can view the API document of richcat under development at the following URL.
+
+- http://localhost:8000/
+
+You can update `richcat` API documentation with the following command.
+
+```
+$ cd ~
+$ make apidoc
+```
+
 ## Contributors
 
 - [@yamamoto-yuta](https://github.com/yamamoto-yuta) (Maintainer, **main contributor!**)
