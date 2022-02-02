@@ -22,6 +22,14 @@ richcat.modules.help module
    :undoc-members:
    :show-inheritance:
 
+richcat.modules.hoge module
+---------------------------
+
+.. automodule:: richcat.modules.hoge
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 richcat.modules.utils module
 ----------------------------
 
