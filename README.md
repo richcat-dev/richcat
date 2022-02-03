@@ -75,7 +75,7 @@ The options that can be specified in `richcat` are as follows:
 | `-V`, `--version`               | Show version.                                                                                        |
 | `-t`, `--filetype <STRING>`     | Specify file type.                                                                                   | `--filetype python`         |
 | `-w`, `--width <INT or FLOAT>`  | Set print width. <br> If width>1, set print width direct. <br> If width<1, set print width percent.' | `--width 80`, `--width 0.5` |
-| `-c`, `--color-system <STRING>` | Chice color system. <br> standard', '256', 'truecolor', 'windows']                                   |
+| `-c`, `--color-system <STRING>` | Choose color system. <br> ['standard', '256', 'truecolor', 'windows']                                |
 | `--style <STRING>`              | Set styles. <br> ['[no]header', '[no]pager']                                                         | `--style=header,nopager`    |
 
 ## Development

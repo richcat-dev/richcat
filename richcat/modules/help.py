@@ -28,7 +28,7 @@ richcat <OPTIONS> <FILE>
                             | 'If width>1, set print width direct.'
                             | 'If width<1, set print width percent.'
                             |
--c, --color-system <STRING> | 'Chice color system.'
+-c, --color-system <STRING> | 'Choose color system.'
                             | ['standard', '256', 'truecolor', 'windows']
                             |
     --style <STRING>        | 'Set styles.'
