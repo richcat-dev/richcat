@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 import sys
 import os
+import subprocess
 import argparse
 
 from .__information__ import __version__
@@ -125,6 +126,15 @@ def print_rich(filetype, target_width, color_system, style, filepath=None, file_
     dic_style = interpret_style(style)
 
     # Print
+    if filetype == 'ipynb':
+        out, err = subprocess.Popen(f'jupyter nbconvert --clear-output --stdout {filepath}'.split(' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+        out, err = subprocess.Popen(f'jupyter nbconvert --stdin --stdout --to markdown'.split(' '), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate(out)
+        file_contents = out.decode('utf-8')
+        #print(file_contents)
+        #exit()
+        file_path = None
+        filetype = 'md'
+
     if filetype == 'md':
         maker = MarkdownMaker(target_width, color_system, dic_style, filepath=filepath, file_contents=file_contents)
         maker.print(dic_style['pager'])
