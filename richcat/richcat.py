@@ -134,6 +134,8 @@ def print_rich(filetype, target_width, color_system, style, filepath=None, file_
             file_contents = out.decode('utf-8')
             filepath = None
             filetype = 'md'
+        else:
+            filetype = 'json'
 
     if filetype == 'md':
         maker = MarkdownMaker(target_width, color_system, dic_style, filepath=filepath, file_contents=file_contents)
