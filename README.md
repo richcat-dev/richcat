@@ -109,7 +109,7 @@ You can update `richcat` API documentation with the following command.
 
 ```
 $ cd ~
-$ make apidoc
+$ make sphinx-apidoc
 ```
 
 ## Contributors

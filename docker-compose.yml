@@ -9,5 +9,5 @@ services:
       - 8000:8000 # For Sphinx
     volumes:
       - .:/home
-    command: bash -c "pip install -e /home && make apidoc && make autobuild"
+    command: bash -c "pip install -e /home && make sphinx-apidoc && make sphinx-autobuild"
     tty: true
