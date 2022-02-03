@@ -127,11 +127,13 @@ def print_rich(filetype, target_width, color_system, style, filepath=None, file_
 
     # Print
     if filetype == 'ipynb':
-        out, err = subprocess.Popen(f'jupyter nbconvert --clear-output --stdout --log-level WARN {filepath}'.split(' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-        out, err = subprocess.Popen(f'jupyter nbconvert --stdin --stdout --to markdown --log-level WARN'.split(' '), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate(out)
-        file_contents = out.decode('utf-8')
-        filepath = None
-        filetype = 'md'
+        is_jupyter_exists = os.path.exists(os.popen('which jupyter', 'r').read().split('\n')[0])
+        if is_jupyter_exists:
+            out, err = subprocess.Popen(f'jupyter nbconvert --clear-output --stdout --log-level WARN {filepath}'.split(' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+            out, err = subprocess.Popen(f'jupyter nbconvert --stdin --stdout --to markdown --log-level WARN'.split(' '), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate(out)
+            file_contents = out.decode('utf-8')
+            filepath = None
+            filetype = 'md'
 
     if filetype == 'md':
         maker = MarkdownMaker(target_width, color_system, dic_style, filepath=filepath, file_contents=file_contents)
