@@ -65,6 +65,19 @@ richcat table.csv --style=header
 | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | ![image](https://user-images.githubusercontent.com/55144709/152151519-a95c262d-9074-47f2-ada8-b5dae6a4866c.png) | ![image](https://user-images.githubusercontent.com/55144709/152151220-9e7e8829-109e-42ed-ad78-96f145fbf222.png) |
 
+## Options
+
+The options that can be specified in `richcat` are as follows:
+
+| option                          | explanation                                                                                          | example                     |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------- | --------------------------- |
+| `-h`, `--help`                  | Show help in English.                                                                                |
+| `-V`, `--version`               | Show version.                                                                                        |
+| `-t`, `--filetype <STRING>`     | Specify file type.                                                                                   | `--filetype python`         |
+| `-w`, `--width <INT or FLOAT>`  | Set print width. <br> If width>1, set print width direct. <br> If width<1, set print width percent.' | `--width 80`, `--width 0.5` |
+| `-c`, `--color-system <STRING>` | Chice color system. <br> standard', '256', 'truecolor', 'windows']                                   |
+| `--style <STRING>`              | Set styles. <br> ['[no]header', '[no]pager']                                                         | `--style=header,nopager`    |
+
 ## Development
 
 If you want to develop richcat, please follow the steps below.
