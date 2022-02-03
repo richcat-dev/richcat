@@ -11,3 +11,10 @@ services:
       - .:/home
     command: bash -c "pip install -e /home && make sphinx-apidoc && make sphinx-autobuild"
     tty: true
+  richcat-play:
+    build: ./richcat-play-env
+    image: richcat-play
+    container_name: richcat-play
+    volumes:
+      - .:/home
+    tty: true
