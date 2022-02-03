@@ -79,13 +79,13 @@ $ docker-compose build
 2. Start the development environment.
 
 ```
-$ docker-compose up
+$ docker-compose up -d
 ```
 
 3. Go inside the launched Docker container to develop.
 
 ```
-$ docker exec -it <CONTAINER_ID>
+$ docker exec -it <CONTAINER_ID> /bin/bash
 ```
 
 You can view the API document of richcat under development at the following URL.
