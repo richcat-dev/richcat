@@ -127,8 +127,8 @@ def print_rich(filetype, target_width, color_system, style, filepath=None, file_
 
     # Print
     if filetype == 'ipynb':
-        out, err = subprocess.Popen(f'jupyter nbconvert --clear-output --stdout {filepath}'.split(' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-        out, err = subprocess.Popen(f'jupyter nbconvert --stdin --stdout --to markdown'.split(' '), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate(out)
+        out, err = subprocess.Popen(f'jupyter nbconvert --clear-output --stdout --log-level WARN {filepath}'.split(' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+        out, err = subprocess.Popen(f'jupyter nbconvert --stdin --stdout --to markdown --log-level WARN'.split(' '), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate(out)
         file_contents = out.decode('utf-8')
         #print(file_contents)
         #exit()
