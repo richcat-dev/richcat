@@ -25,7 +25,7 @@ jobs:
 
       - id: get_version_in_code
         name: Get richcat version from code
-        run: echo "::set-output name=version_in_code::$((python ./scripts/get_version.py))"
+        run: echo "::set-output name=version_in_code::$(python ./scripts/get_version.py)"
 
       - name: Compare version
         run: |
