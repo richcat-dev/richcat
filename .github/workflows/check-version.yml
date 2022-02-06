@@ -18,10 +18,11 @@ jobs:
         with:
           python-version: 3.7
 
-      - name: Debug
-        run: |
-          pwd
-          ls
+      - name: Debug(pwd)
+        run: pwd
+
+      - name: Debug(ls)
+        run: ls
 
       - name: Get richcat version from code
         run: python ./scripts/get_version.py
