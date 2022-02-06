@@ -20,7 +20,8 @@ jobs:
         name: Extract richcat version from branch name
         env:
           BRANCH_NAME: ${{github.head_ref}}
-        run: echo "::set-output name=version_in_branch::$((echo $BRANCH_NAME | cut -d '/' -f 2 | sed 's/v//'))"
+        run: |
+          echo "::set-output name=version_in_branch::$(echo $BRANCH_NAME | cut -d '/' -f 2 | sed 's/v//')"
 
       - id: get_version_in_code
         name: Get richcat version from code
