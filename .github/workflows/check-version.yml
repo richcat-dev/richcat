@@ -1,0 +1,14 @@
+name: Check version
+
+on:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print branch name
+        env:
+          BRANCH_NAME: ${{github.head_ref}}
+        run: echo $BRANCH_NAME
