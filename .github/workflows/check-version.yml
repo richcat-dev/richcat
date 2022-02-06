@@ -16,15 +16,15 @@ jobs:
         with:
           python-version: 3.7
 
-      - id: get_version_in_branch
-        name: Extract richcat version from branch name
+      - name: Extract richcat version from branch name
+        id: get_version_in_branch
         env:
           BRANCH_NAME: ${{github.head_ref}}
         run: |
           echo "::set-output name=version_in_branch::$(echo $BRANCH_NAME | cut -d '/' -f 2 | sed 's/v//')"
 
-      - id: get_version_in_code
-        name: Get richcat version from code
+      - name: Get richcat version from code
+        id: get_version_in_code
         run: echo "::set-output name=version_in_code::$(python ./scripts/get_version.py)"
 
       - name: Compare version
