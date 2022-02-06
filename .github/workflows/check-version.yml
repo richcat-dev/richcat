@@ -29,4 +29,8 @@ jobs:
 
       - name: Compare version
         run: |
-          echo ${{ steps.get_version_in_branch.outputs.version_in_branch }} ${{ steps.get_version_in_code.outputs.version_in_code }}
+          if [[ ${{ steps.get_version_in_branch.outputs.version_in_branch }} == ${{ steps.get_version_in_code.outputs.version_in_code }} ]]; then
+            echo true
+          else
+            echo false
+          fi
