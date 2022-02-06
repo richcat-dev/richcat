@@ -1,4 +1,6 @@
-from richcat.__information__ import __version__
+import re
 
-if __name__ == '__main__':
-    print(__version__)
+with open('./richcat/__information__.py', 'r') as f:
+    init_text = f.read()
+    _version = re.search(r'__version__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
+    print(_version)
