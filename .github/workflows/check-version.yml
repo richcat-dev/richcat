@@ -8,7 +8,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print branch name
+      - name: Extract richcat version from branch name
         env:
           BRANCH_NAME: ${{github.head_ref}}
-        run: echo $BRANCH_NAME
+        run: echo $BRANCH_NAME | cut -d "/" -f 2 | sed 's/v//'
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Get richcat version from code
+        run: python ./scripts/get_version.py
