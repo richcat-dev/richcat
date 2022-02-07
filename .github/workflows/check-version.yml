@@ -38,6 +38,7 @@ jobs:
 
   upload_to_testpypi:
     runs-on: ubuntu-latest
+    needs: check_version
 
     steps:
       - name: test
