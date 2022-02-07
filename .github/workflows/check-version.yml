@@ -4,8 +4,11 @@ on:
   pull_request:
 
 jobs:
-  check:
+  check_version:
     runs-on: ubuntu-latest
+
+    outputs:
+      version_matched: ${{ steps.compare_version.outputs.matched }}
 
     steps:
       - name: Checkout
@@ -27,9 +30,12 @@ jobs:
         run: echo "::set-output name=version_in_code::$(python ./scripts/get_version.py)"
 
       - name: Compare version
-        run: |
-          if [[ ${{ steps.get_version_in_branch.outputs.version_in_branch }} == ${{ steps.get_version_in_code.outputs.version_in_code }} ]]; then
-            echo true
-          else
-            echo false
-          fi
+        id: compare_version
+        run: echo "::set-output name=matched::$([[ ${{ steps.get_version_in_branch.outputs.version_in_branch }} == ${{ steps.get_version_in_code.outputs.version_in_code }} ]])"
+
+  upload_to_testpypi:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: test
+        run: echo ${{ needs.check_version.outputs.version_matched }}
