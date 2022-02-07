@@ -36,6 +36,7 @@ jobs:
   upload_to_testpypi:
     runs-on: ubuntu-latest
     needs: check_version
+    if: ${{ needs.check_version.outputs.version_matched }}
 
     steps:
       - name: test
