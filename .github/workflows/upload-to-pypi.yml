@@ -21,7 +21,7 @@ jobs:
 
       - name: get richcat version from tag
         id: get_version_in_tag
-        run: echo ${GITHUB_REF#refs/tags/}
+        run: echo ${GITHUB_REF}
 
       # - name: Get richcat version from code
       #   id: get_version_in_code
