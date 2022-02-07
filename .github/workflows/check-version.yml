@@ -41,3 +41,6 @@ jobs:
     steps:
       - name: test
         run: echo ${{ needs.check_version.outputs.version_matched }}
+
+      - name: test2
+        run: echo $([[ ${{ needs.check_version.outputs.version_matched }} == 0 ]]; echo $?)
