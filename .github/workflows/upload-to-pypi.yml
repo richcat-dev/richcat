@@ -23,6 +23,9 @@ jobs:
         id: get_version_in_tag
         run: echo ${{ github.ref }}
 
+      - name: test
+        run: echo ${{ github.head_ref }}
+
       # - name: Get richcat version from code
       #   id: get_version_in_code
       #   run: echo "::set-output name=version_in_code::$(python ./scripts/get_version.py)"
