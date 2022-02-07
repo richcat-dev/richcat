@@ -1,0 +1,40 @@
+name: Upload to PyPI
+
+on:
+  pull_request:
+
+jobs:
+  check_version:
+    runs-on: ubuntu-latest
+
+    outputs:
+      version_matched: ${{ steps.compare_version.outputs.matched }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # - name: Set up Python
+      #   uses: actions/setup-python@v2
+      #   with:
+      #     python-version: 3.7
+
+      - name: get richcat version from tag
+        id: get_version_in_tag
+        run: echo ${GITHUB_REF#refs/tags/}
+
+      # - name: Get richcat version from code
+      #   id: get_version_in_code
+      #   run: echo "::set-output name=version_in_code::$(python ./scripts/get_version.py)"
+
+      # - name: Compare version
+      #   id: compare_version
+      #   run: echo "::set-output name=matched::$([[ ${{ steps.get_version_in_tag.outputs.version_in_branch }} == ${{ steps.get_version_in_code.outputs.version_in_code }} ]]; echo $?)"
+
+  upload_to_testpypi:
+    runs-on: ubuntu-latest
+    needs: check_version
+
+    steps:
+      - name: test
+        run: echo ${{ needs.check_version.outputs.version_matched }}
