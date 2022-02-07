@@ -31,10 +31,10 @@ jobs:
 
       - name: Compare version
         id: compare_version
-        run: echo "::set-output name=matched::$([[ ${{ steps.get_version_in_branch.outputs.version_in_branch }} == ${{ steps.get_version_in_code.outputs.version_in_code }} ]]; echo $?)"
+        run: echo "::set-output name=matched::0"
 
       - name: test
-        run: [[ ${{ steps.get_version_in_branch.outputs.version_in_branch }} == ${{ steps.get_version_in_code.outputs.version_in_code }} ]]; echo $?
+        run: echo "[[ ${{ steps.get_version_in_branch.outputs.version_in_branch }} == ${{ steps.get_version_in_code.outputs.version_in_code }} ]]; echo $?"
 
   upload_to_testpypi:
     runs-on: ubuntu-latest
