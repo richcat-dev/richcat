@@ -1,10 +1,10 @@
 # Base libraries
-rich
+rich == 11.1.0
 
 # For Sphinx
-sphinx
-sphinx-autobuild
-sphinx_rtd_theme
+sphinx == 4.4.0
+sphinx-autobuild == 2021.3.14
+sphinx_rtd_theme == 1.0.0
 
 # Testing
-pytest
+pytest == 6.2.5
