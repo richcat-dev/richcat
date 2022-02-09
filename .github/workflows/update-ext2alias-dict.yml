@@ -33,5 +33,8 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git add ./richcat/modules/consts/_ext2alias_dic_generator.py
-          git commit -m "Update dictionalies";
-          git push origin HEAD:${GITHUB_REF};
+          git diff --exit-code --quiet ./richcat/modules/consts/_ext2alias_dic_generator.py
+          if [[ $? -eq 1 ]]; then
+            git commit -m "Update dictionalies";
+            git push origin HEAD:${GITHUB_REF};
+          fi
