@@ -1,0 +1,9 @@
+name: Act Test 01
+on: push
+
+jobs:
+  act_test_01:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test 01
+        run: echo "test 01"
