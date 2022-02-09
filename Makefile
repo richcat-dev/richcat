@@ -4,15 +4,15 @@ PROJECTDIR = ${PROJECTNAME}
 DEPLOYDIR = ${SPHINXDIR}/_build
 
 
-.PHONY: sphinx-apidoc
-sphinx-apidoc:
+.PHONY: apidoc
+apidoc:
 	sphinx-apidoc -f -H ${PROJECTNAME} -o "${SPHINXDIR}" "${PROJECTDIR}"
 
-.PHONY: sphinx-autobuild
-sphinx-autobuild:
+.PHONY: autobuild
+autobuild:
 	sphinx-autobuild --host 0.0.0.0 -b html "${SPHINXDIR}" "${DEPLOYDIR}"
 
-.PHONY: sphinx-deploy
-sphinx-deploy:
+.PHONY: publicbuild
+publicbuild:
 	sphinx-apidoc -f -H ${PROJECTNAME} -o "${SPHINXDIR}" "${PROJECTDIR}"
 	sphinx-build -b html "${SPHINXDIR}" "${DEPLOYDIR}"
