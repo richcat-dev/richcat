@@ -1,0 +1,11 @@
+name: Dispatched
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tests
+        run: |
+          echo "hoge"
