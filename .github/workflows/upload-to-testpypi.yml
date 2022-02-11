@@ -2,6 +2,8 @@ name: Upload to TestPyPI
 
 on:
   pull_request:
+    branches:
+      - release
 
 jobs:
   check_version:
