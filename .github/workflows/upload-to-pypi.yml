@@ -14,25 +14,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # - name: Set up Python
-      #   uses: actions/setup-python@v2
-      #   with:
-      #     python-version: 3.7
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
 
-      - name: get richcat version from tag
-        id: get_version_in_tag
-        run: echo ${{ github.ref }}
+      - name: Extract richcat version from branch name
+        id: get_version_in_branch
+        env:
+          BRANCH_NAME: ${{github.head_ref}}
+        run: echo "::set-output name=version_in_branch::$(echo $BRANCH_NAME | cut -d '/' -f 2 | sed 's/v//')"
 
-      - name: test
-        run: echo ${{ github.head_ref }}
+      - name: Get richcat version from code
+        id: get_version_in_code
+        run: echo "::set-output name=version_in_code::$(python ./scripts/get_version.py)"
 
-      # - name: Get richcat version from code
-      #   id: get_version_in_code
-      #   run: echo "::set-output name=version_in_code::$(python ./scripts/get_version.py)"
-
-      # - name: Compare version
-      #   id: compare_version
-      #   run: echo "::set-output name=matched::$([[ ${{ steps.get_version_in_tag.outputs.version_in_branch }} == ${{ steps.get_version_in_code.outputs.version_in_code }} ]]; echo $?)"
+      - name: Compare version
+        id: compare_version
+        run: echo "::set-output name=matched::$([[ ${{ steps.get_version_in_branch.outputs.version_in_branch }} == ${{ steps.get_version_in_code.outputs.version_in_code }} ]]; echo $?)"
 
   upload_to_pypi:
     runs-on: ubuntu-latest
