@@ -8,6 +8,11 @@ services:
     ports:
       - 8000:8000 # For Sphinx
     volumes:
-      - .:/home
+      - type: bind
+        source: "./"
+        target: "/home/"
+      - type: bind
+        source: "/var/run/docker.sock"
+        target: "/var/run/docker.sock"
     command: bash -c "pip install -e /home && make apidoc && make autobuild"
     tty: true
