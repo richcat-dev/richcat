@@ -137,4 +137,8 @@ dmypy.json
 # VSCode Remote Container
 .vscode/
 
+# bash
 .bash_history
+
+# act
+.secrets
