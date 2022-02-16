@@ -16,3 +16,12 @@ services:
         target: "/var/run/docker.sock"
     command: bash -c "pip install -e /home && make apidoc && make autobuild"
     tty: true
+  richcat-play:
+    build: ./richcat-play-env
+    image: richcat-play
+    container_name: richcat-play
+    volumes:
+      - type: bind
+        source: "./"
+        target: "/home/"
+    tty: true
