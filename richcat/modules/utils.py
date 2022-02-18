@@ -67,3 +67,20 @@ def calc_max_line_length(file_contents):
         max line length
     """
     return max(count_line_length(file_contents))
+
+
+def is_library_installed(library_name):
+    """
+    The function to check if the library is installed
+
+    Parameters
+    ----------
+    library_name : str
+        library name
+
+    Returns
+    -------
+    : bool
+        True if the library is installed
+    """
+    return os.path.exists(os.popen(f'which {library_name}', 'r').read().split('\n')[0])
