@@ -69,7 +69,7 @@ def calc_max_line_length(file_contents):
     return max(count_line_length(file_contents))
 
 
-def is_library_installed(library_name):
+def is_installed(library_name):
     """
     The function to check if the library is installed
 
