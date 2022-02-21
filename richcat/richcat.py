@@ -8,7 +8,7 @@ from .__information__ import __version__
 from .modules.consts._const import LST_COLOR_SYSTEM_CHOISES, DIC_DEFAULT_VALUES
 from .modules.consts._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
 from .modules.exceptions.exception import RichcatFileNotFoundError, RichcatIsDirectoryError, RichcatPermissionError, RichcatBrokenPipeError
-from .modules.utils import extract_filename, extract_extension
+from .modules.utils import extract_filename, extract_extension, import_module_with_existence_confirmation
 from .modules.help import print_help
 
 from .modules.rich_makers.syntax_maker import SyntaxMaker
@@ -127,8 +127,7 @@ def print_rich(filetype, target_width, color_system, style, filepath=None, file_
 
     # Print
     if filetype == 'ipynb':
-        is_jupyter_exists = os.path.exists(os.popen('which jupyter', 'r').read().split('\n')[0])
-        if is_jupyter_exists:
+        if import_module_with_existence_confirmation('jupyter') is not None:
             out, err = subprocess.Popen(f'jupyter nbconvert --clear-output --stdout --log-level WARN {filepath}'.split(' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
             out, err = subprocess.Popen(f'jupyter nbconvert --stdin --stdout --to markdown --log-level WARN'.split(' '), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate(out)
             file_contents = out.decode('utf-8')
