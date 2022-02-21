@@ -27,6 +27,7 @@ share/python-wheels/
 *.egg
 MANIFEST
 .pypirc
+.python_history
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -82,7 +83,9 @@ sphinx/*
 target/
 
 # Jupyter Notebook
-.ipynb_checkpoints
+.ipynb_checkpoints/
+.jupyter/
+.local/
 
 # IPython
 profile_default/
