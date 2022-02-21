@@ -1,4 +1,5 @@
 import os
+from importlib import import_module
 
 
 def extract_filename(path):
@@ -69,18 +70,21 @@ def calc_max_line_length(file_contents):
     return max(count_line_length(file_contents))
 
 
-def is_installed(library_name):
+def import_module_with_existence_confirmation(module_name):
     """
-    The function to check if the library is installed
+    The function to check if the module is installed and import the moduleto check if the library is installed
 
     Parameters
     ----------
-    library_name : str
-        library name
+    module_name : str
+        module name
 
     Returns
     -------
-    : bool
-        True if the library is installed
+    : ModuleType or None
+        imported module. None if the module is not installed.
     """
-    return os.path.exists(os.popen(f'which {library_name}', 'r').read().split('\n')[0])
+    try:
+        return import_module(module_name)
+    except:
+        return None
