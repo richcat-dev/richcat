@@ -15,13 +15,9 @@
 
 ### Support viewer
 
-#### Markdown
-
-![image](https://user-images.githubusercontent.com/55144709/152116094-d20ea35a-5dbd-441c-b668-2a3f408caaaf.png)
-
-#### CSV
-
-![image](https://user-images.githubusercontent.com/55144709/152116330-e9a391a0-0491-4b3b-82f9-7a56e789a273.png)
+| Markdown                                                                                                        | CSV                                                                                                             | Jupyter Notebook                                                                                                |
+| --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| ![image](https://user-images.githubusercontent.com/55144709/152116094-d20ea35a-5dbd-441c-b668-2a3f408caaaf.png) | ![image](https://user-images.githubusercontent.com/55144709/152116330-e9a391a0-0491-4b3b-82f9-7a56e789a273.png) | ![image](https://user-images.githubusercontent.com/55144709/154985162-d177e0ac-4f26-47e2-a49b-5008883e541f.png) |
 
 ### Automatic paging
 
