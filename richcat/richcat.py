@@ -132,11 +132,11 @@ def print_rich(filetype, target_width, color_system, style, filepath=None, file_
             out, err = subprocess.Popen(f'jupyter nbconvert --stdin --stdout --to markdown --log-level WARN'.split(' '), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate(out)
             file_contents = out.decode('utf-8')
             filepath = None
-            filetype = 'md'
+            filetype = DIC_LEXER_WC['md']
         else:
-            filetype = 'json'
+            filetype = DIC_LEXER_WC['json']
 
-    if filetype == 'md':
+    if filetype == DIC_LEXER_WC['md']:
         maker = MarkdownMaker(target_width, color_system, dic_style, filepath=filepath, file_contents=file_contents)
         maker.print(dic_style['pager'])
 
