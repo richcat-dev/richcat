@@ -6,3 +6,6 @@ export LESS="-F -g -i -M -R -S -w -X -z-4"
 
 # Alias for act command
 alias act="~/bin/act"
+
+# Alias for Jupyter Lab
+alias jl='jupyter lab --port 8888 --ip=* --allow-root'

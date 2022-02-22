@@ -15,19 +15,25 @@
 
 ### Support viewer
 
-#### Markdown
-
-![image](https://user-images.githubusercontent.com/55144709/152116094-d20ea35a-5dbd-441c-b668-2a3f408caaaf.png)
-
-#### CSV
-
-![image](https://user-images.githubusercontent.com/55144709/152116330-e9a391a0-0491-4b3b-82f9-7a56e789a273.png)
+| Markdown                                                                                                        | CSV                                                                                                             | Jupyter Notebook                                                                                                |
+| --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| ![image](https://user-images.githubusercontent.com/55144709/152116094-d20ea35a-5dbd-441c-b668-2a3f408caaaf.png) | ![image](https://user-images.githubusercontent.com/55144709/152116330-e9a391a0-0491-4b3b-82f9-7a56e789a273.png) | ![image](https://user-images.githubusercontent.com/55144709/154985162-d177e0ac-4f26-47e2-a49b-5008883e541f.png) |
 
 ### Automatic paging
 
 By default, `richcat` pipes its own output to a pager. If you wouldn't rather pager, use `--style=nopager` option.
 
 ![image](https://user-images.githubusercontent.com/55144709/152116597-fdaca73f-9c0d-4b56-894c-e384dba84d96.png)
+
+### Support Python import
+
+Import on Python console:
+
+![image](https://user-images.githubusercontent.com/55144709/154991230-006518c7-f5a4-43c4-82f4-3390d84eb64d.png)
+
+Import on Jupyter Lab:
+
+![image](https://user-images.githubusercontent.com/55144709/154992180-07477488-c2d5-4e72-acbe-1954171d589a.png)
 
 ## Installation
 
@@ -64,6 +70,15 @@ richcat table.csv --style=header
 | `--style=noheader` (default)                                                                                    | `--style=header`                                                                                                |
 | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | ![image](https://user-images.githubusercontent.com/55144709/152151519-a95c262d-9074-47f2-ada8-b5dae6a4866c.png) | ![image](https://user-images.githubusercontent.com/55144709/152151220-9e7e8829-109e-42ed-ad78-96f145fbf222.png) |
+
+If you want to use `richcat` in Python, you can use the following example.
+
+example:
+
+```python
+>>> from richcat import richcat
+>>> richcat("table.csv")
+```
 
 ## Options
 
