@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
+      version: ${{ steps.get_version_in_code.outputs.version_in_code }}
       version_matched: ${{ steps.compare_version.outputs.matched }}
 
     steps:
@@ -41,6 +42,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Get pre-release count
+        id: get_pre_release_count
+        run: echo "::set-output name=pre_release_count::$(curl -s https://test.pypi.org/project/richcat/#history | grep -coE /project/richcat/0.5.0rc)"
+
+      - name: Set pre-release version
+        run: sed -i "s/${{ needs.check_version.outputs.version }}/${{ needs.check_version.outputs.version }}rc${{ steps.get_pre_release_count.outputs.pre_release_count }}/g" ./richcat/__information__.py
 
       - name: Set up Python
         uses: actions/setup-python@v2
