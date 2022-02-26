@@ -23,6 +23,9 @@ services:
     container_name: richcat-play
     volumes:
       - type: bind
-        source: "./"
+        source: "./richcat-play-env/"
         target: "/home/"
+      - type: bind
+        source: "./debug"
+        target: "/home/debug"
     tty: true
