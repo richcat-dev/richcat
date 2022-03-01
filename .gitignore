@@ -26,6 +26,8 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+.pypirc
+.python_history
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -69,13 +71,21 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+sphinx/*
+!sphinx/_static/
+!sphinx/_templates/
+!sphinx/index.rst
+!sphinx/conf.py
+!sphinx/make.bat
+!sphinx/Makefile
 
 # PyBuilder
 target/
 
 # Jupyter Notebook
-.ipynb_checkpoints
+.ipynb_checkpoints/
+.jupyter/
+.local/
 
 # IPython
 profile_default/
@@ -130,3 +140,9 @@ dmypy.json
 
 # VSCode Remote Container
 .vscode/
+
+# bash
+.bash_history
+
+# act
+.secrets

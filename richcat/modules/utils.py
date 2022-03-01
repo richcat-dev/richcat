@@ -1,4 +1,5 @@
 import os
+from importlib import import_module
 
 
 def extract_filename(path):
@@ -67,3 +68,23 @@ def calc_max_line_length(file_contents):
         max line length
     """
     return max(count_line_length(file_contents))
+
+
+def import_module_with_existence_confirmation(module_name):
+    """
+    The function to check if the module is installed and import the moduleto check if the library is installed
+
+    Parameters
+    ----------
+    module_name : str
+        module name
+
+    Returns
+    -------
+    : ModuleType or None
+        imported module. None if the module is not installed.
+    """
+    try:
+        return import_module(module_name)
+    except:
+        return None

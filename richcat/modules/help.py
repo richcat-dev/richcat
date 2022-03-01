@@ -1,5 +1,6 @@
 from ..__information__ import __version__
 
+
 def print_help():
     return f"# richcat {__version__}"+"""
 The `richcat` command supporting various types of files.
@@ -7,7 +8,6 @@ The `richcat` command supporting various types of files.
 ## USAGE
 ```js
 richcat <OPTIONS> <FILE>
-<COMMANDS> | richcat -w <INT> <OPTIONS>
 ```
 
 ## ARGS
@@ -28,7 +28,7 @@ richcat <OPTIONS> <FILE>
                             | 'If width>1, set print width direct.'
                             | 'If width<1, set print width percent.'
                             |
--c, --color-system <STRING> | 'Chice color system.'
+-c, --color-system <STRING> | 'Choose color system.'
                             | ['standard', '256', 'truecolor', 'windows']
                             |
     --style <STRING>        | 'Set styles.'

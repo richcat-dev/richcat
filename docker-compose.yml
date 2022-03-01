@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  richcat-dev:
+    build: .
+    image: richcat-dev
+    container_name: richcat-dev
+    ports:
+      - 8000:8000 # For Sphinx
+      - 8888:8888 # For Jupyter
+    volumes:
+      - type: bind
+        source: "./"
+        target: "/home/"
+      - type: bind
+        source: "/var/run/docker.sock"
+        target: "/var/run/docker.sock"
+    command: bash -c "pip install -e /home && make apidoc && make autobuild"
+    tty: true
+  richcat-play:
+    build: ./richcat-play-env
+    image: richcat-play
+    container_name: richcat-play
+    volumes:
+      - type: bind
+        source: "./richcat-play-env/"
+        target: "/home/"
+      - type: bind
+        source: "./debug"
+        target: "/home/debug"
+    tty: true

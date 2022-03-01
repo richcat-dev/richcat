@@ -6,7 +6,7 @@ from abc import abstractmethod
 from rich.console import Console
 
 from ..consts._const import DIC_DEFAULT_VALUES
-from ..exceptions.exception import *
+from ..exceptions.exception import RichcatTerminalWidthGetError
 
 
 class AbstractRichMaker(ABC):
@@ -82,8 +82,8 @@ class AbstractRichMaker(ABC):
             terminal width
         """
         try:
-            _, terminal_width = os.popen('stty size', 'r').read().split()
-            return int(terminal_width)
+            terminal_width = int(os.popen('tput cols', 'r').read())
+            return terminal_width
         except ValueError:
             raise RichcatTerminalWidthGetError()
 

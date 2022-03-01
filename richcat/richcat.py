@@ -1,17 +1,14 @@
 from __future__ import unicode_literals
 import sys
 import os
+import subprocess
 import argparse
-
-from rich.console import Console
-from rich.panel import Panel
-from rich.console import RenderGroup
 
 from .__information__ import __version__
 from .modules.consts._const import LST_COLOR_SYSTEM_CHOISES, DIC_DEFAULT_VALUES
 from .modules.consts._ext2alias_dic_generator import DIC_LEXER_WC, DIC_LEXER_CONST
-from .modules.exceptions.exception import *
-from .modules.utils import extract_filename, extract_extension
+from .modules.exceptions.exception import RichcatFileNotFoundError, RichcatIsDirectoryError, RichcatPermissionError, RichcatBrokenPipeError
+from .modules.utils import extract_filename, extract_extension, import_module_with_existence_confirmation
 from .modules.help import print_help
 
 from .modules.rich_makers.syntax_maker import SyntaxMaker
@@ -129,7 +126,17 @@ def print_rich(filetype, target_width, color_system, style, filepath=None, file_
     dic_style = interpret_style(style)
 
     # Print
-    if filetype == 'md':
+    if filetype == 'ipynb':
+        if import_module_with_existence_confirmation('jupyter') is not None:
+            out, err = subprocess.Popen(f'jupyter nbconvert --ClearOutputPreprocessor.enabled=True --to notebook --stdout --log-level WARN {filepath}'.split(' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+            out, err = subprocess.Popen(f'jupyter nbconvert --stdin --stdout --to markdown --log-level WARN'.split(' '), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate(out)
+            file_contents = out.decode('utf-8')
+            filepath = None
+            filetype = DIC_LEXER_WC['md']
+        else:
+            filetype = DIC_LEXER_WC['json']
+
+    if filetype == DIC_LEXER_WC['md']:
         maker = MarkdownMaker(target_width, color_system, dic_style, filepath=filepath, file_contents=file_contents)
         maker.print(dic_style['pager'])
 
@@ -143,7 +150,7 @@ def print_rich(filetype, target_width, color_system, style, filepath=None, file_
 
 
 def main():
-    """ Args """
+    # Args
     parser = argparse.ArgumentParser(description="RichCat", formatter_class=argparse.RawTextHelpFormatter, add_help=False)
     parser.add_argument('filepath', type=str, metavar='FilePath', nargs='?', default=None, help='file path')
     parser.add_argument('-V', '--version', action='version', version='%%(prog)s %s' % __version__)
@@ -160,28 +167,28 @@ def main():
 
     if not args.help:
         if args.filepath is None:
-            if args.filetype==DIC_DEFAULT_VALUES['filetype']:
+            if args.filetype == DIC_DEFAULT_VALUES['filetype']:
                 args.filetype = 'text'
             args.file_contents = ''.join(sys.stdin.readlines())
         else:
             args.file_contents = None
-    """ Execute richcat """
+    # Execute richcat
     richcat(args)
 
 
 def richcat(args):
     try:
-        """ help """
+        # help
         if args.help:
-            args.file_contents,args.filetype,args.filepath = print_help()
+            args.file_contents, args.filetype, args.filepath = print_help()
 
-        """ Checking input error """
+        # Checking input error
         check_input_error(args)
 
-        """ Infering FileType """
+        # Infering FileType
         filepath, filetype = infer_filetype(args.filepath, args.filetype)
 
-        """ Print Rich """
+        # Print Rich
         try:
             print_rich(filetype, float(args.width), args.color_system, args.style, filepath=filepath, file_contents=args.file_contents)
         except BrokenPipeError:
