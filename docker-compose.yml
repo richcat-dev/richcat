@@ -15,7 +15,7 @@ services:
       - type: bind
         source: "/var/run/docker.sock"
         target: "/var/run/docker.sock"
-    command: bash -c "pip install -e /home && make apidoc && make autobuild"
+    command: bash -c "pip install -e /home && make sphinx-apidoc && make sphinx-autobuild"
     tty: true
   richcat-play:
     build: ./richcat-play-env
